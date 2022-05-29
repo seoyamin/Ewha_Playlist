@@ -206,27 +206,3 @@ create table db2022_playlist_user (
     foreign key(user_id) references db2022_user(user_id),
     foreign key(music_id) references db2022_music(music_id)
 );
-
-create table db2022_playlist_age (
-    music_id int,
-    age_limit boolean,
-    age_type int,
-    primary key(music_id),
-    foreign key(music_id) references db2022_music(music_id)
-);
-
-create table db2022_playlist_season (
-    music_id int,
-    age_limit boolean,
-    season_type varchar(45),
-    primary key(music_id),
-    foreign key(music_id) references db2022_music(music_id)
-);
-
-create table db2022_playlist_situation (
-    music_id int,
-    age_limit boolean,
-    situation_type varchar(45),
-    primary key(music_id),
-    foreign key(music_id) references db2022_music(music_id)
-);
