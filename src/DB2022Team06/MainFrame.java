@@ -1,6 +1,8 @@
+package DB2022Team06;
 import java.awt.Color;
 import java.awt.Container;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -40,13 +42,12 @@ public class MainFrame extends JFrame{
 		//중간 플레이 리스트 버튼 두개
 		for(int i=2;i<=3;i++) {
 			JButton b=new JButton(btnList[i]);
-			b.setLocation(100+(i-2)*130,OFFSET+200);
+			b.setLocation(100+(i-2)*130,OFFSET+190);
 			b.setSize(120,100);
 			b.setForeground(Color.WHITE); //글씨 색상
 			b.setBackground(EWHA_GREEN); 
 			contentpane.add(b);
 		}
-		
 		
 		//하단 나머지 버튼 세개 (검색/추천/관리)
 		for(int i=4;i<=6;i++) {
@@ -56,9 +57,16 @@ public class MainFrame extends JFrame{
 			b.setForeground(Color.WHITE); //글씨 색상
 			b.setBackground(EWHA_GREEN);
 			contentpane.add(b);
+			
+			if(i==5) { //추천 버튼 화면 전환 액션
+				b.addActionListener((ActionListener) new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						new Recommend();
+						setVisible(false);
+					}
+				});
+			}
 		}
-		
-		
 	
 		//마이페이지 버튼
 		JButton myPageBtn=new JButton(btnList[7]);
@@ -70,12 +78,11 @@ public class MainFrame extends JFrame{
 		
 		setSize(450,800); //contentpane의 크기
 		setVisible(true); // 보이도록하기.
-		
 	}
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		MainFrame frame = new MainFrame(); // 프레임 실행
-		
 	}
 
 }
