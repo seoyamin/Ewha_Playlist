@@ -1,3 +1,4 @@
+package DB2022Team06;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

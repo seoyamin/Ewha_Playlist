@@ -1,3 +1,4 @@
+package DB2022Team06;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -33,13 +34,14 @@ public class Nickname extends JFrame {
 		setSize(500,500);
 		setVisible(true);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		setLayout(new BorderLayout());
+		jPanel.setLayout(null);// 배치관리자 해제
 
 		/*닉네임 입력 안내문구*/
 		JLabel text=new JLabel("닉네임을 입력하세요");
 		jPanel.add(text);
 		text.setVisible(true);
-		text.setBounds(100, 100, 250, 100);
+		text.setLocation(100, 100);
+		text.setSize(250,100);
 		
 		/*닉네임 입력 box*/
 		JTextField name=new JTextField();
@@ -70,15 +72,27 @@ public class Nickname extends JFrame {
 		            while(rs.next()) {
 		            	nickname=rs.getString(1);
 		            	
-		            	if(user_nickname.equals(nickname)) {
-		    				new playlist_main(nickname);
+		            	if(user_nickname.equals(nickname)) { //회원정보 = 닉네임
+		    				new playlist_main(nickname); //플레이리스트 창으로 이동
 		    				setVisible(false);
 		    			}
-		            	else {
+		            	else { //회원 정보가 없다면 
 		            		JLabel popup=new JLabel("회원 정보가 없습니다. 회원가입 후 다시 이용해주세요");
 		            		jPanel.add(popup);
 		            		popup.setVisible(true);
 		            		popup.setBounds(100, 100, 450, 100);
+		            		
+		            		JButton btn2=new JButton("회원가입"); 
+		            		jPanel.add(btn2);
+		            		btn2.setVisible(true);
+		            		btn2.setBounds(100,200,150,70);
+		            		
+		            		btn2.addActionListener((ActionListener) new ActionListener() {
+		    					public void actionPerformed(ActionEvent e) {
+		    						new MainFrame(); //회원가입 창으로 변경하기
+		    						setVisible(false);
+		    					}
+		    				});
 		            	}
 		            }
 				}
@@ -90,8 +104,11 @@ public class Nickname extends JFrame {
 		});
 	}
 	
-		 public static void main(String[] args) {
-			new Nickname();
-		}
+	
+	public static void main(String[] args) {
+		new Nickname();
+		
+	}
+	
 }	
 	

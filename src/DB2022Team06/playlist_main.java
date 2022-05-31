@@ -1,3 +1,4 @@
+package DB2022Team06;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -9,6 +10,8 @@ public class playlist_main extends JFrame {
     private static final String USERNAME = "DB2022Team06";//DBMS접속 시 아이디
     private static final String PASSWORD = "DB2022Team06";//DBMS접속 시 비밀번호
     private static final String URL = "jdbc:mysql://localhost:3306/DB2022Team06";
+    
+    
     
     /* 전체 음악 목록 sql*/
     public void Total_musicPlaylist() {
@@ -39,7 +42,7 @@ public class playlist_main extends JFrame {
 		add(jPanel);
 		setSize(500,500);
 		setVisible(true);
-		setLayout(new BorderLayout());	
+		setLayout(null);// 배치관리자 해제
 		
 		JLabel jLabel=new JLabel(nickname+"의 플레이리스트");
 		jPanel.add(jLabel,BorderLayout.CENTER);
@@ -51,7 +54,7 @@ public class playlist_main extends JFrame {
 		btn1.setVisible(true);
 		btn1.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new music_Info();
+				new music_Info_insert(nickname);
 				setVisible(false);
 			}
 		});
@@ -62,7 +65,7 @@ public class playlist_main extends JFrame {
 		btn2.setVisible(true);
 		btn2.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new music_Info();
+				new music_Info_delete();
 				setVisible(false);
 			}
 		});
@@ -80,6 +83,18 @@ public class playlist_main extends JFrame {
 		btn4.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Total_musicPlaylist();
+			}
+		});
+		
+		/*이전 화면으로 돌아가기*/
+		JButton btn5 = new JButton("이전");
+		jPanel.add(btn5,BorderLayout.CENTER);
+		btn5.setVisible(true);
+		
+		btn5.addActionListener((ActionListener) new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Nickname();
+				setVisible(false);
 			}
 		});
 	}
