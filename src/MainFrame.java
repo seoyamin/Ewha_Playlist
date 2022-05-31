@@ -1,13 +1,68 @@
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+class MyListener implements ActionListener{
+	 
+	int btnNum; // 어떤 버튼 눌렀는지 
+	Container contentpane; // 활성화 된 컨텐트팬 
+	
+	public MyListener(int btnNum,Container contentpane){
+		this.btnNum=btnNum;
+		this.contentpane=contentpane;
+		
+	}
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton button  = (JButton)e.getSource();
+        contentpane.setVisible(false);
+
+        switch(btnNum) {
+        case 0:
+        	//new musicList(); // 전체음악 목록 창 열기
+        	break;
+        	
+        case 1: 
+        	//TOP 10 
+        	break;
+        
+        case 2: 
+        	//나만의 플레이 리스트
+        	break;
+        	
+        case 3: 
+        	//추천 플레이 리스트
+        	break;
+        	
+        case 4: 
+        	//음악 검색
+        	break; 
+        	
+        case 5:
+        	//음악 추천
+        	break;
+        	
+        case 6:
+        	//음원 관리
+        	break;
+        	
+        case 7:
+        	//마이페이지
+        	break;
+        }
+    }
+    
+}
 public class MainFrame extends JFrame{
 	
 	String[] btnList=new String[]{"전체음악 목록","TOP 10","<HTML>나만의<br>플레이 리스트</HTML>","<HTML>추천<br>플레이 리스트</HTML>","음악 검색","음악 추천","음원 관리","마이페이지"};
+	
+	
 	public MainFrame () { //생성자
 		
 		setTitle("음악정보관리시스템 이플리 DBMS");
@@ -44,6 +99,7 @@ public class MainFrame extends JFrame{
 			b.setSize(120,100);
 			b.setForeground(Color.WHITE); //글씨 색상
 			b.setBackground(EWHA_GREEN); 
+			
 			contentpane.add(b);
 		}
 		
@@ -55,11 +111,12 @@ public class MainFrame extends JFrame{
 			b.setSize(BTNSIZE,50);
 			b.setForeground(Color.WHITE); //글씨 색상
 			b.setBackground(EWHA_GREEN);
+			b.addActionListener(new MyListener(i,contentpane));
+		
 			contentpane.add(b);
 		}
 		
 		
-	
 		//마이페이지 버튼
 		JButton myPageBtn=new JButton(btnList[7]);
 		myPageBtn.setLocation(300,700);
