@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 class MyListener implements ActionListener{
 	 
 	int btnNum; // 어떤 버튼 눌렀는지 
-	Container contentpane; // 활성화 된 컨텐트팬 
+	Container contentpane; // 현재 활성화된 메인 컨텐트 팬
 	
 	public MyListener(int btnNum,Container contentpane){
 		this.btnNum=btnNum;
@@ -20,7 +20,7 @@ class MyListener implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton button  = (JButton)e.getSource();
-        contentpane.setVisible(false);
+        contentpane.setVisible(false); // 메인화면 내용 보이지 않게 하기.
 
         switch(btnNum) {
         case 0:
@@ -89,6 +89,7 @@ public class MainFrame extends JFrame{
 			b.setSize(BTNSIZE,50);
 			b.setForeground(Color.WHITE); //글씨 색상
 			b.setBackground(EWHA_GREEN);
+			b.addActionListener(new MyListener(i,contentpane));
 			contentpane.add(b);
 		}
 		
@@ -99,7 +100,7 @@ public class MainFrame extends JFrame{
 			b.setSize(120,100);
 			b.setForeground(Color.WHITE); //글씨 색상
 			b.setBackground(EWHA_GREEN); 
-			
+			b.addActionListener(new MyListener(i,contentpane));
 			contentpane.add(b);
 		}
 		
