@@ -1,13 +1,12 @@
-#CREATE DATABASE DB2022Team06;
+#CREATE DATABASE DB2022Team06 default character set utf8 collate utf8_unicode_ci;
 
 use DB2022Team06;
-
 
 create table db2022_songwriter (
     music_id int,
     songwriter varchar(45),
     primary key(music_id, songwriter)
-);
+) default character set utf8 collate utf8_unicode_ci;
 
 INSERT INTO db2022_songwriter VALUES
 (1,"제시"),
@@ -94,15 +93,11 @@ INSERT INTO db2022_songwriter VALUES
 (29,"Brian Harold May"),
 (30,"김윤아");
 
-
-
-
 create table db2022_singer (
     music_id int,
     singer varchar(45),
     primary key(music_id, singer)
-);
-
+) default character set utf8 collate utf8_unicode_ci;
 
 INSERT INTO db2022_singer VALUES
 (1,"제시"),
@@ -138,7 +133,6 @@ INSERT INTO db2022_singer VALUES
 (29,"Queen"),
 (30,"자우림");
 
-
 create table db2022_music (
     music_id int AUTO_INCREMENT,
     playtime Time, 
@@ -152,8 +146,7 @@ create table db2022_music (
     music_age int not null,
     primary key(music_id),
     check (genre in ('랩/힙합','POP','KPOP','트로트','발라드','록/메탈','없음'))
-);
-
+) default character set utf8 collate utf8_unicode_ci;
 
 INSERT INTO db2022_music(playtime,title,likes,genre,age_limit,release_date,situation,season,music_age) VALUES
 ("00:02:54","ZOOM",34498,"랩/힙합",false,"2022-04-13","운동","여름",10 ),
@@ -187,8 +180,6 @@ INSERT INTO db2022_music(playtime,title,likes,genre,age_limit,release_date,situa
 ("00:02:01","We Will Rock You",31157,"록/메탈",false,"1977-10-07","운동","가을",20 ),
 ("00:04:45","스물다섯, 스물하나",185117,"록/메탈",true,"2022-04-13","여행","가을",40 );
 
-
-
 create table db2022_user (
     user_id int,
     name varchar(45),
@@ -196,7 +187,7 @@ create table db2022_user (
     age int,
     favorite_genre varchar(45),
     primary key(user_id)
-);
+) default character set utf8 collate utf8_unicode_ci;
 
 create table db2022_playlist_user (
     user_id int,
@@ -205,4 +196,4 @@ create table db2022_playlist_user (
     primary key(user_id, music_id),
     foreign key(user_id) references db2022_user(user_id),
     foreign key(music_id) references db2022_music(music_id)
-);
+) default character set utf8 collate utf8_unicode_ci;
