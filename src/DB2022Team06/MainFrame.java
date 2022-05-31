@@ -7,18 +7,68 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+class MyListener extends JFrame implements ActionListener{
+	 
+	int btnNum;  // 어떤 버튼 눌렀는지 
+	Container contentpane; // 현재 활성화된 메인 컨텐트 팬
+	
+	public MyListener(int btnNum, Container contentpane){
+		this.btnNum = btnNum;
+		this.contentpane = contentpane;
+	}
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton button = (JButton)e.getSource();
+        contentpane.setVisible(false); // 메인화면 내용 보이지 않게 하기
+        
+        switch(btnNum) {
+        case 0:
+        	//new musicList(); // 전체음악 목록 창 열기
+        	break;
+        	
+        case 1: 
+        	//TOP 10 
+        	break;
+        
+        case 2: 
+        	//나만의 플레이 리스트
+        	break;
+        	
+        case 3: 
+        	//추천 플레이 리스트
+        	break;
+        	
+        case 4: 
+        	//음악 검색
+        	break; 
+        	
+        case 5:
+        	new Recommend();
+        	break;
+        	
+        case 6:
+        	//음원 관리
+        	break;
+        	
+        case 7:
+        	//마이페이지
+        	break;
+        }
+    }
+}
+
 public class MainFrame extends JFrame{
 	
-	String[] btnList=new String[]{"전체음악 목록","TOP 10","<HTML>나만의<br>플레이 리스트</HTML>","<HTML>추천<br>플레이 리스트</HTML>","음악 검색","음악 추천","음원 관리","마이페이지"};
-	public MainFrame () { //생성자
+	String[] btnList = new String[]{"전체음악 목록","TOP 10","<HTML>나만의<br>플레이 리스트</HTML>","<HTML>추천<br>플레이 리스트</HTML>","음악 검색","음악 추천","음원 관리","마이페이지"};
+	public MainFrame() { //생성자
 		
 		setTitle("음악정보관리시스템 이플리 DBMS");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		Container contentpane=getContentPane();
+		Container contentpane = getContentPane();
 		
-		int BTNSIZE=250;
-		int OFFSET =70;
-		Color EWHA_GREEN =new Color(0,70,42);
+		int BTNSIZE = 250;
+		int OFFSET = 70;
+		Color EWHA_GREEN = new Color(0,70,42);
 		contentpane.setLayout(null);// 배치관리자 해제
 		
 		// NullContainer는 컴포넌트의 절대적 크기,위치를 지정해주어야함.
@@ -36,6 +86,7 @@ public class MainFrame extends JFrame{
 			b.setSize(BTNSIZE,50);
 			b.setForeground(Color.WHITE); //글씨 색상
 			b.setBackground(EWHA_GREEN);
+			b.addActionListener(new MyListener(i, contentpane));
 			contentpane.add(b);
 		}
 		
@@ -46,6 +97,7 @@ public class MainFrame extends JFrame{
 			b.setSize(120,100);
 			b.setForeground(Color.WHITE); //글씨 색상
 			b.setBackground(EWHA_GREEN); 
+			b.addActionListener(new MyListener(i, contentpane));
 			contentpane.add(b);
 		}
 		
@@ -56,16 +108,8 @@ public class MainFrame extends JFrame{
 			b.setSize(BTNSIZE,50);
 			b.setForeground(Color.WHITE); //글씨 색상
 			b.setBackground(EWHA_GREEN);
+			b.addActionListener(new MyListener(i, contentpane));
 			contentpane.add(b);
-			
-			if(i==5) { //추천 버튼 화면 전환 액션
-				b.addActionListener((ActionListener) new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						new Recommend();
-						setVisible(false);
-					}
-				});
-			}
 		}
 	
 		//마이페이지 버튼
@@ -74,15 +118,15 @@ public class MainFrame extends JFrame{
 		myPageBtn.setSize(100,50);
 		myPageBtn.setForeground(Color.WHITE); //글씨 색상
 		myPageBtn.setBackground(EWHA_GREEN);
+		myPageBtn.addActionListener(new MyListener(7, contentpane));
 		contentpane.add(myPageBtn);
 		
 		setSize(450,800); //contentpane의 크기
-		setVisible(true); // 보이도록하기.
+		setVisible(true); // 보이도록 하기
 	}
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		MainFrame frame = new MainFrame(); // 프레임 실행
 	}
-
 }
