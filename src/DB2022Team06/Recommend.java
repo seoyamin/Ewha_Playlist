@@ -12,15 +12,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class Recommend extends JFrame{
+public class Recommend{
 
-	Recommend(){ // 생성자
-		setTitle("음악정보관리시스템 이플리 DBMS");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	Recommend(Container contentpane, MainFrame mainframe, JPanel panel){ // 생성자
+		mainframe.setTitle("음악정보관리시스템 이플리 DBMS");
+		mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel recommendPanel = new JPanel();
-		setSize(450,450);
 		recommendPanel.setLayout(null);
-		add(recommendPanel);
+		contentpane.add(recommendPanel);
 		
 		// 메인 화면으로 돌아가기 버튼
 		JButton goMainBtn = new JButton("메인");
@@ -33,8 +32,8 @@ public class Recommend extends JFrame{
 		//위 버튼이 눌렸을 때 메인으로 돌아가는 액션
 		goMainBtn.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new MainFrame();
-				setVisible(false);
+				recommendPanel.setVisible(false);
+				panel.setVisible(true);
 			}
 		});
 		
@@ -67,6 +66,6 @@ public class Recommend extends JFrame{
 			}
 		});
 		
-		setVisible(true);
+		mainframe.setVisible(true);
 	}
 }
