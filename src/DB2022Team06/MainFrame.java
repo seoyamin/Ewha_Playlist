@@ -53,7 +53,7 @@ class MyListener implements ActionListener{
         	break;
         	
         case 6:
-        	//음원 관리
+        	new Management(contentpane, mainframe, panel);
         	break;
         	
         case 7:
