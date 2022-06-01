@@ -32,8 +32,9 @@ public class Recommend_Model {
         		JOptionPane.showMessageDialog(null, "일치하는 회원 정보가 없습니다. 회원 가입 후 서비스를 이용해주세요.");
         	}else {
         		System.out.println(nickname + "님의 취향에 맞는 추천 음악 리스트 입니다.");
-        		System.out.println("----------------------------------------------------------");
-        		System.out.println("제목\t 가수\t 작사작곡\t 재생시간\t 좋아요 수\t 장르\t 발매일\t");
+        		System.out.println("---------------------------------------------------------------------------------------------");
+        		System.out.println("    제목    |    가수    |    작사작곡    |    재생시간    |    좋아요 수    |    장르    |    발매일    ");
+        		System.out.println("---------------------------------------------------------------------------------------------");
         		do{
         			if(rs1.getBoolean("age_limit") && rs1.getInt("age") < 20) { //유저가 20살 미만이고 곡의 나이 제한이 true면 이 튜플 건너뛰기
         				return;
