@@ -54,7 +54,7 @@ class MyListener implements ActionListener{
         	break;
         	
         case 6:
-        	new Management1(contentpane, mainframe, panel, 1);
+        	new Management1(contentpane, mainframe, panel,1);
         	break;
         	
         case 7:
