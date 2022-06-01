@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -42,10 +41,12 @@ class MyListener implements ActionListener{
         	
         case 3: 
         	//추천 플레이 리스트
+        	new Playlist_recommended(contentpane, mainframe, panel);
         	break;
         	
         case 4: 
         	//음악 검색
+        	new Search(contentpane, mainframe, panel);
         	break; 
         	
         case 5:
