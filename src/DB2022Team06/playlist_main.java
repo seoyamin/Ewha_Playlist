@@ -11,7 +11,26 @@ public class playlist_main extends JFrame {
     private static final String PASSWORD = "DB2022Team06";//DBMS접속 시 비밀번호
     private static final String URL = "jdbc:mysql://localhost:3306/DB2022Team06";
     
-    
+    /*나만의 플레이리스트 음악 조회*/
+    public void user_musicPlaylist() {
+    	try {
+    		int i=1;
+				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+				Statement stmt = conn.createStatement(); 
+	            //stmt.executeQuery("use DB2022Team06");
+	            ResultSet rs = stmt.executeQuery("select title, singer from db2022_music, db2022_singer where db2022_music.music_id=db2022_singer.music_id;");
+	            System.out.println("_____________________________");
+            	System.out.println("전체 음악 목록 조회");
+            	System.out.println("_____________________________");
+	            while(rs.next()) {
+	            	System.out.printf("%d. %-20s| %-20s\n", i, rs.getString(1), rs.getString(2));
+	            	i++;
+	            }
+    		} 
+    		catch (SQLException e) {
+				e.printStackTrace();
+			}
+    }
     
     /* 전체 음악 목록 sql*/
     public void Total_musicPlaylist() {
@@ -65,7 +84,7 @@ public class playlist_main extends JFrame {
 		btn2.setVisible(true);
 		btn2.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new music_Info_delete();
+				new music_Info_delete(nickname);
 				setVisible(false);
 			}
 		});
@@ -74,6 +93,12 @@ public class playlist_main extends JFrame {
 		JButton btn3=new JButton("나의 음악 목록 조회");
 		jPanel.add(btn3,BorderLayout.CENTER);
 		btn3.setVisible(true);
+		
+		btn3.addActionListener((ActionListener) new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				user_musicPlaylist();
+			}
+		});
 		
 		/* 전체 플레이리스트 음악 조회 */
 		JButton btn4=new JButton("전체 음악 목록 조회");
@@ -93,7 +118,7 @@ public class playlist_main extends JFrame {
 		
 		btn5.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Nickname();
+				new MainFrame();
 				setVisible(false);
 			}
 		});

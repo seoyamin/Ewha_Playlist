@@ -4,7 +4,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.sql.*;
 
-public class Nickname extends JFrame {
+public class Nickname {
 	
 	private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String USERNAME = "DB2022Team06";//DBMS접속 시 아이디
@@ -24,16 +24,16 @@ public class Nickname extends JFrame {
 			}
     } */
 
-	public Nickname() {
+	Nickname(Container contentpane, MainFrame mainframe, JPanel panel) {
 		
-		super("닉네임 입력화면");
-	
+		mainframe.setTitle("닉네임 입력화면");
+		
 		/* Panel 추가 */
 		JPanel jPanel=new JPanel(); 
-		add(jPanel);
-		setSize(500,500);
-		setVisible(true);
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		mainframe.add(jPanel);
+		mainframe.setSize(500,500);
+		mainframe.setVisible(true);
+		mainframe.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		jPanel.setLayout(null);// 배치관리자 해제
 
 		/*닉네임 입력 안내문구*/
@@ -74,7 +74,7 @@ public class Nickname extends JFrame {
 		            	
 		            	if(user_nickname.equals(nickname)) { //회원정보 = 닉네임
 		    				new playlist_main(nickname); //플레이리스트 창으로 이동
-		    				setVisible(false);
+		    				mainframe.setVisible(false);
 		    			}
 		            	else { //회원 정보가 없다면 
 		            		JLabel popup=new JLabel("회원 정보가 없습니다. 회원가입 후 다시 이용해주세요");
@@ -90,7 +90,7 @@ public class Nickname extends JFrame {
 		            		btn2.addActionListener((ActionListener) new ActionListener() {
 		    					public void actionPerformed(ActionEvent e) {
 		    						new MainFrame(); //회원가입 창으로 변경하기
-		    						setVisible(false);
+		    						mainframe.setVisible(false);
 		    					}
 		    				});
 		            	}
@@ -102,12 +102,6 @@ public class Nickname extends JFrame {
 				
 			}
 		});
-	}
-	
-	
-	public static void main(String[] args) {
-		new Nickname();
-		
 	}
 	
 }	

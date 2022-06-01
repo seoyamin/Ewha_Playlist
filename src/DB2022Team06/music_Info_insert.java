@@ -14,8 +14,75 @@ public class music_Info_insert extends JFrame {
     private static final String USERNAME = "DB2022Team06";//DBMS접속 시 아이디
     private static final String PASSWORD = "DB2022Team06";//DBMS접속 시 비밀번호
     private static final String URL = "jdbc:mysql://localhost:3306/DB2022Team06";
+
+
+    public void insert(String nickname, String title, String singer) {
+    	String query="insert into db2022_playlist_user(user_id, music_id,age_limit) "
+    			+ "values((select user_id from db2022_user where nickname=?),(select T.music_id from db2022_music as T,db2022_singer as S where (T.title=?) and (S.singer=?)),(select T.age_limit from db2022_music as T,db2022_singer as S where (T.title=?) and (S.singer=?)))";
+    	int age=0,bool=0;
+    	
+		try {
+			System.out.println(nickname);
+			System.out.println(title);
+			System.out.println(singer);
+			
+			Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+			Statement stmt1 = conn.createStatement(); 
+			Statement stmt2 = conn.createStatement(); 
+			//stmt.executeQuery("use DB2022Team06");
+			ResultSet rs1 = stmt1.executeQuery("select age from db2022_user where nickname="+"'"+nickname+"'");
+			ResultSet rs = stmt2.executeQuery("select age_limit from db2022_music, db2022_singer where (db2022_music.title="+"'"+title+"')"+"and (db2022_singer.singer="+"'"+singer+"')");
+		
+			conn.setAutoCommit(false);
+			
+			while(rs1.next()) {
+				
+				age=rs1.getInt(1);
+				
+				while(rs.next()) {
+		
+				bool=rs.getInt(1);
+					
+				if(bool==1 && age<=19) {
+					System.out.print("denied: Age Limit");
+					}
+					
+					else {
+						PreparedStatement pStmt = conn.prepareStatement(query);
+						
+			            pStmt.setString(1, nickname);
+			            pStmt.setString(2, title);
+			            pStmt.setString(3, singer);
+			            pStmt.setString(4, title);
+			            pStmt.setString(5, singer);
+			            pStmt.executeUpdate();
+			            
+			            System.out.println("Successfully Add\n");
+			            System.out.println("---------------------------------------------------------------\n");
+			            conn.commit();
+					}
+				}
+			}
+		}
+			
+		/*	PreparedStatement pStmt = conn.prepareStatement(query);
+
+            pStmt.setString(1, nickname);
+            pStmt.setString(2, title);
+            pStmt.setString(3, singer);
+            pStmt.executeUpdate();
+            
+            System.out.println("Successfully Add\n");
+            System.out.println("---------------------------------------------------------------\n");
+            conn.commit();*/
+		
+		catch (SQLException e1) {
+			e1.printStackTrace();
+			System.out.print("error");
+		}
+		
+		}
     
-	
 	public music_Info_insert(String nickname) {
 		
 		JPanel jPanel = new JPanel();
@@ -46,7 +113,7 @@ public class music_Info_insert extends JFrame {
 		jPanel.add(box2);
 		box1.setVisible(true);
 		box2.setVisible(true);	
-		box1.setLocation(90, 50);
+		box1.setLocation(150, 10);
 		box1.setSize(100, 19);
 		box2.setLocation(100, 30);
 		box2.setSize(100, 19);
@@ -55,37 +122,18 @@ public class music_Info_insert extends JFrame {
 		jPanel.add(btn);
 		btn.setVisible(true);
 		btn.setSize(100, 30);
+
 		
 		btn.addActionListener(new ActionListener() {
-			String title,singer;
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String query="insert into db2022_playlist_user(user_id,music_id) values(?, select music_id from db2022_music,db2022_singer where (db2022_music.id=db2022_singer.music.id), (db2022_music.title=?) and (db2022_singer.singer=?))";
+				String title,singer;
 				
 				title=box1.getText();
 				singer=box2.getText();
-				
-				try (
-					Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-					Statement stmt = conn.createStatement(); 
-		            //stmt.executeQuery("use DB2022Team06");
-					PreparedStatement pStmt = conn.prepareStatement(query);)
-				{
-					conn.setAutoCommit(false);
-
-	                pStmt.setString(1, nickname);
-	                pStmt.setString(2, title);
-	                pStmt.executeUpdate();
-	                
-	                System.out.println("플레이리스트에 음악 추가가 완료되었습니다.\n");
-	                System.out.println("---------------------------------------------------------------\n");
-	                conn.commit();
-				}
-				catch (SQLException e1) {
-					e1.printStackTrace();
-					System.out.print("error");
-				}
+		
+				insert(nickname,title,singer);
 				
 			}
 		});
@@ -93,14 +141,15 @@ public class music_Info_insert extends JFrame {
 		JButton btn1=new JButton("이전");
 		jPanel.add(btn1);
 		btn1.setVisible(true);
+		btn1.setLocation(100, 50);
 		btn1.setSize(100, 30); 
 		
-		/*btn1.addActionListener((ActionListener) new ActionListener() {
+		btn1.addActionListener((ActionListener) new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 			new playlist_main(nickname);
 			setVisible(false);
 		}
-	});*/
+	});
 	}
 }
 
