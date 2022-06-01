@@ -9,16 +9,18 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JOptionPane;
 
-public class Management{
-	String password = "password";
-	
-	public Management(Container contentpane, MainFrame mainframe, JPanel mainmenuPanel) {
+public class Management1{
+	String password = "pw"; //"DB2022Team06";
+			
+	public Management1(Container contentpane, MainFrame mainframe, JPanel mainmenuPanel) {
 		// TODO Auto-generated constructor stub
 		JPanel management1 = new JPanel();
-
+		
 		management1.setLayout(null);
 		contentpane.add(management1);
+		
 		
 		// 메인 화면으로 돌아가기 버튼
 		JButton goMainBtn = new JButton("메인");
@@ -57,14 +59,19 @@ public class Management{
 		inputBtn.setSize(80,40);
 		management1.add(inputBtn);
 		
+		
+		
+		
 		inputBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String n = pw.getText();
 				if(n.equals(password)) {
-					System.out.println("맞음"); //management2로 이동
+					management1.setVisible(false);
+					pw.setText("");
+					new Management2(contentpane, mainframe, management1);
 				}
 				else{
-					System.out.println("틀림");
+					JOptionPane.showMessageDialog(null,"비밀번호가 아닙니다.","Message", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
