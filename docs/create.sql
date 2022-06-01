@@ -185,7 +185,7 @@ INSERT INTO db2022_music(playtime,title,likes,genre,age_limit,release_date,situa
 
 # 유저 정보 테이블 생성 - user id, 이름, 닉네임, 나이, 선호 장르
 create table db2022_user (
-    user_id int,
+    user_id int AUTO_INCREMENT,
     name varchar(45),
     nickname varchar(45) unique,
     age int,
@@ -195,7 +195,7 @@ create table db2022_user (
 
 # 마이 플레이리스트 테이블 생성 - user id, music id, 곡의 나이 제한 여부, 곡의 장르
 create table db2022_playlist_user (
-    user_id int,
+    user_id int ,
     music_id int,
     genre varchar(45),
     age_limit boolean,
