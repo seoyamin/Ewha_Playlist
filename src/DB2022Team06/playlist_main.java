@@ -12,16 +12,23 @@ public class playlist_main extends JFrame {
     private static final String URL = "jdbc:mysql://localhost:3306/DB2022Team06";
     
     /*나만의 플레이리스트 음악 조회*/
-    public void user_musicPlaylist() {
+    public void user_musicPlaylist(String nickname) {
+    	String query = "select title, singer from db2022_music as S, db2022_singer as M,db2022_playlist_user as T "
+    			+ "where user_id=(select user_id from db2022_user where nickname=?) and T.music_id=S.music_id and S.music_id=M.music_id";
     	try {
     		int i=1;
 				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-				Statement stmt = conn.createStatement(); 
 	            //stmt.executeQuery("use DB2022Team06");
-	            ResultSet rs = stmt.executeQuery("select title, singer from db2022_music, db2022_singer where db2022_music.music_id=db2022_singer.music_id;");
+
+	            PreparedStatement pStmt = conn.prepareStatement(query);
+	            pStmt.setString(1, nickname);
+	            
+	            ResultSet rs = pStmt.executeQuery();
+	            
 	            System.out.println("_____________________________");
-            	System.out.println("전체 음악 목록 조회");
+            	System.out.println(nickname+"님의 플레이리스트 조회");
             	System.out.println("_____________________________");
+            	
 	            while(rs.next()) {
 	            	System.out.printf("%d. %-20s| %-20s\n", i, rs.getString(1), rs.getString(2));
 	            	i++;
@@ -39,7 +46,7 @@ public class playlist_main extends JFrame {
 				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 				Statement stmt = conn.createStatement(); 
 	            //stmt.executeQuery("use DB2022Team06");
-	            ResultSet rs = stmt.executeQuery("select title, singer from db2022_music, db2022_singer where db2022_music.music_id=db2022_singer.music_id;");
+	            ResultSet rs = stmt.executeQuery("select title, singer from db2022_music, db2022_singer where db2022_music.music_id=db2022_singer.music_id");
 	            System.out.println("_____________________________");
             	System.out.println("전체 음악 목록 조회");
             	System.out.println("_____________________________");
@@ -97,7 +104,7 @@ public class playlist_main extends JFrame {
 		
 		btn3.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				user_musicPlaylist();
+				user_musicPlaylist(nickname);
 			}
 		});
 		
