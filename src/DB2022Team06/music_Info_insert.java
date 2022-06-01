@@ -17,8 +17,8 @@ public class music_Info_insert extends JFrame {
 
 
     public void insert(String nickname, String title, String singer) {
-    	String query="insert into db2022_playlist_user(user_id, music_id,age_limit) "
-    			+ "values((select user_id from db2022_user where nickname=?),(select T.music_id from db2022_music as T,db2022_singer as S where (T.title=?) and (S.singer=?)),(select T.age_limit from db2022_music as T,db2022_singer as S where (T.title=?) and (S.singer=?)))";
+    	String query="insert into db2022_playlist_user(user_id, music_id,genre,age_limit) "
+    			+ "values((select user_id from db2022_user where nickname=?),(select T.music_id from db2022_music as T,db2022_singer as S where (T.title=?) and (S.singer=?)),(select T.genre from db2022_music as T,db2022_singer as S where (T.title=?) and (S.singer=?)),(select T.age_limit from db2022_music as T,db2022_singer as S where (T.title=?) and (S.singer=?)))";
     	int age=0,bool=0;
     	
 		try {
@@ -55,6 +55,8 @@ public class music_Info_insert extends JFrame {
 			            pStmt.setString(3, singer);
 			            pStmt.setString(4, title);
 			            pStmt.setString(5, singer);
+			            pStmt.setString(6, title);
+			            pStmt.setString(7, singer);
 			            pStmt.executeUpdate();
 			            
 			            System.out.println("Successfully Add\n");
@@ -64,17 +66,6 @@ public class music_Info_insert extends JFrame {
 				}
 			}
 		}
-			
-		/*	PreparedStatement pStmt = conn.prepareStatement(query);
-
-            pStmt.setString(1, nickname);
-            pStmt.setString(2, title);
-            pStmt.setString(3, singer);
-            pStmt.executeUpdate();
-            
-            System.out.println("Successfully Add\n");
-            System.out.println("---------------------------------------------------------------\n");
-            conn.commit();*/
 		
 		catch (SQLException e1) {
 			e1.printStackTrace();
@@ -152,4 +143,3 @@ public class music_Info_insert extends JFrame {
 	});
 	}
 }
-

@@ -28,7 +28,7 @@ class MyListener implements ActionListener{
         
         switch(btnNum) {
         case 0:
-        	//new musicList(); // 전체음악 목록 창 열기
+        	new MusicList(mainframe,contentpane,  panel); // 전체음악 목록 창 열기
         	break;
         	
         case 1: 
@@ -42,6 +42,7 @@ class MyListener implements ActionListener{
         	
         case 3: 
         	//추천 플레이 리스트
+        	new Playlist_recommended(contentpane, mainframe, panel);
         	break;
         	
         case 4: 
@@ -49,10 +50,11 @@ class MyListener implements ActionListener{
         	break; 
         	
         case 5:
+        	new Recommend(contentpane, mainframe, panel);
         	break;
         	
         case 6:
-        	//음원 관리
+        	new Management(contentpane, mainframe, panel);
         	break;
         	
         case 7:

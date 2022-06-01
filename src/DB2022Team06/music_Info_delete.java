@@ -21,6 +21,8 @@ public class music_Info_delete extends JFrame {
     			+ "values((select user_id from db2022_user where nickname=?),(select T.music_id from db2022_music as T,db2022_singer as S where (T.title=?) and (S.singer=?)),(select T.age_limit from db2022_music as T,db2022_singer as S where (T.title=?) and (S.singer=?)))";
     	int age=0,bool=0;
     	
+    	//delete from db2022_playlist_user where ((select user_id from db2022_user where nickname='ju') and (select T.music_id from db2022_music as T,db2022_singer as S where (T.title='ZOOM') and (S.singer='제시')))
+    	
 		try {
 			System.out.println(nickname);
 			System.out.println(title);
@@ -152,4 +154,3 @@ public class music_Info_delete extends JFrame {
 	});
 	}
 }
-
