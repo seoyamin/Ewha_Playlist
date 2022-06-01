@@ -96,7 +96,7 @@ public class Playlist_recommended {
     }
     
     
-    // 세부 주제 (봄, 여름 가을, 겨울 등) 선택용 JPanel 프레임을 init하는 메소드
+    // 세부 주제 (봄, 여름 등) 선택용 JPanel 프레임을 init하는 메소드
     public void initJpanel_detail(JPanel panel_detail, int topicNum) {
     	Color EWHA_GREEN = new Color(0,70,42);
 		for(int j=0 ; j<detailList[topicNum].length ; j++) {
@@ -119,16 +119,7 @@ public class Playlist_recommended {
     }
     
     
-    
-    
-    // Playlist_recommended 생성자
-	public Playlist_recommended(Container contentpane, MainFrame mainframe, JPanel panel) {
-		initJpanel_topic(contentpane, mainframe, panel);
-		
-		
-	}
-	
-	
+    // 각각의 플레이리스트를 출력하는 메소드
 	public void show_playlist(int topicNum, String detail) {
 		String topicList_eng[] = {"situation", "season", "music_age"};
 		String query = "SELECT title, playtime FROM db2022_music WHERE " + topicList_eng[topicNum] + " = \"" + detail + "\"";
@@ -149,7 +140,20 @@ public class Playlist_recommended {
         } catch (SQLException e) {
         	System.out.println("err : " + e);
         }
-}
+	}
+    
+	
+	
+	
+    // Playlist_recommended 생성자
+	public Playlist_recommended(Container contentpane, MainFrame mainframe, JPanel panel) {
+		initJpanel_topic(contentpane, mainframe, panel);
+		
+		
+	}
+	
+	
+	
 	
 	
 	
