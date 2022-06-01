@@ -6,17 +6,120 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+ 
+class SelectMusicList {
+    private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static final String USERNAME = "DB2022Team06";//DBMS접속 시 아이디
+    private static final String PASSWORD = "DB2022Team06";//DBMS접속 시 비밀번호
+    private static final String URL = "jdbc:mysql://localhost:3306/DB2022Team06"; //DBMS접속할 db명 - 로컬 상황에 맞게 바꿔서 사용해주세요
+    
+    public SelectMusicList(String genre) {
 
+    	try {
+        	Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            System.out.println("success");
+            
+            Statement stmt = conn.createStatement(); 
+            
+            try {
+            	 ResultSet rset;
+            	if(genre=="전체") {
+            		   rset = stmt.executeQuery(
+                       		"select * from db2022_music"
+                       	);
+            		   System.out.println("<전체 음원 목록>\n");
+            	}
+            	else {
+            		 rset = stmt.executeQuery(
+                     		"select * from db2022_music where genre=\""+genre+"\""
+                     	);
+            		 System.out.println("장르가"+genre+"인곡\n");
+                     
+            	}
+           
 
+		
+            		while (rset.next()) {
+            			
+            		System.out.println(rset.getInt(1)+" "+rset.getString("title")+" "+rset.getTime("playtime")+" "+rset.getInt("likes")+" "+rset.getString("genre")+" "+rset.getDate("release_date"));
+            		}
+            
+            }
+            catch (SQLException sqle)
+            {
+            System.out.println("Could not select tuple. " + sqle);
+            }
+            	
+            stmt.close();
+            conn.close();
+            
+        } catch (SQLException e1) {
+        	System.out.println("connection fail");
+        }
+    }
+}
+ 
+class SelectMusicListener implements ActionListener{
+	 
+	int btnNum;  // 어떤 버튼 눌렀는지 
+	
+	
+	public SelectMusicListener(int btnNum){
+		this.btnNum = btnNum;
+	
+	}
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton button = (JButton)e.getSource();
+      
+        
+        switch(btnNum) {
+        case 0:
+        	new SelectMusicList("전체");//전체 음악 목록 조회
+        	break;
+        	
+        case 1: 
+        	new SelectMusicList("KPOP");
+        	break;
+        
+        case 2: 
+        	new SelectMusicList("발라드");
+        	break;
+        	
+        case 3: 
+        	new SelectMusicList("랩/힙합");
+        	break;
+        	
+        case 4: 
+        	new SelectMusicList("록/메탈");
+        	break; 
+        	
+        case 5:
+        	new SelectMusicList("POP");
+        	break;
+        	
+        case 6:
+        	new SelectMusicList("트로트");
+        	break;
+        	
+     
+        }
+    }
+}
 public class MusicList {
 
    
-   String[] btnList=new String[]{"전체음악목록조회(최신순)","K-POP","발라드","힙합","음악 검색","R&B","POP","OST"};
+   String[] btnList=new String[]{"전체음악목록조회","K-POP","발라드","랩/힙합","록/메탈","POP","트로트"};
    
-   public MusicList (MainFrame mainframe,Container contentpane,JPanel mainmenuPanel) {
+   	public MusicList (MainFrame mainframe,Container contentpane,JPanel mainmenuPanel) {
 
       JPanel musiclistPanel = new JPanel();
       contentpane.add(musiclistPanel);
@@ -34,6 +137,7 @@ public class MusicList {
          b.setBackground(EWHA_GREEN);
          musiclistPanel.add(b);
      	b.setPreferredSize(new Dimension(250, 30));
+     	b.addActionListener(new SelectMusicListener(i));
 
       }
   
@@ -41,8 +145,6 @@ public class MusicList {
  		JButton goMainBtn = new JButton("메인");
  		goMainBtn.setForeground(Color.WHITE); //글씨 색상
  		goMainBtn.setBackground(Color.GRAY);
- 		goMainBtn.setLocation(10,10);
-		goMainBtn.setSize(80, 40);
  		musiclistPanel.add(goMainBtn);
  		goMainBtn.setPreferredSize(new Dimension(250, 30));
         
@@ -58,7 +160,7 @@ public class MusicList {
    }
    public static void main(String[] args) {
       // TODO Auto-generated method stub
-      // // 보이도록하기.
+      // 보이도록하기.
       
       
       
