@@ -101,28 +101,43 @@ public class Search {
     
     // 제목 검색 결과 출력하는 메소드
     public void show_title(String title) {
-		String query = "SELECT title, playtime FROM db2022_music WHERE title = \"" + title + "\"";
+    	String query = "SELECT title, singer, songwriter, playtime, likes, genre, release_date "
+				+ "FROM db2022_music,  "
+				+ "(SELECT music_id, GROUP_CONCAT(singer) AS 'singer' FROM db2022_singer GROUP BY music_id) AS S, "
+				+ "(SELECT music_id, GROUP_CONCAT(songwriter) AS 'songwriter' FROM db2022_songwriter GROUP BY music_id) AS SW "
+				+ "WHERE (title = ?) AND (db2022_music.music_id = S.music_id) AND (db2022_music.music_id = SW.music_id)";
+		
+		
 		try(Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-				Statement stmt = conn.createStatement();) {
+			Statement stmt = conn.createStatement();
+			PreparedStatement pStmt = conn.prepareStatement(query);) {
 			
-			System.out.println("------------------------------------------");
-			System.out.println("**** [" + title + "] 제목 검색 결과 ****");
-			System.out.println("------------------------------------------");
+			pStmt.setString(1, title);
+			ResultSet rset = pStmt.executeQuery();
+			
+			
+			System.out.println(" **** [" + title + "] 제목 검색 결과 ****");
+			System.out.println("---------------------------------------------------------------------------------------------");
+    		System.out.println("    제목    |    가수    |    작사작곡    |    재생시간    |    좋아요 수    |    장르    |    발매일    ");
+    		System.out.println("---------------------------------------------------------------------------------------------");
         	
-			stmt.executeUpdate("use db2022team06");
-            ResultSet rset = stmt.executeQuery(query);
-            
+			
             if(!rset.next()) {
             	System.out.println("해당 제목을 가진 음악이 없습니다.");
             }
             else {
             	do {
-            		System.out.println(rset.getString("title") + " (" + rset.getString("playtime") + ")");
+            		System.out.println(rset.getString("title") + " | " 
+            							+ rset.getString("singer") + " | "
+            							+ rset.getString("songwriter") + " | "
+            							+ rset.getString("playtime") + " | "
+            							+ rset.getString("likes") + " | "
+            							+ rset.getString("genre") + " | "
+            							+ rset.getString("release_date") + " | ");
             	}
             	while(rset.next());
             	System.out.println();
             }
-            
             
             
         } catch (SQLException e) {
@@ -134,23 +149,39 @@ public class Search {
     
 	// 가수명 검색 결과 출력하는 메소드
 	public void show_singer(String singer) {
-		String query = "SELECT M.title, M.playtime FROM db2022_music as M, db2022_singer as S WHERE S.singer = \"" + singer + "\" AND S.music_id = M.music_id";
+		String query = "SELECT title, singer, songwriter, playtime, likes, genre, release_date "
+				+ "FROM db2022_music,  "
+				+ "(SELECT music_id, GROUP_CONCAT(singer) AS 'singer' FROM db2022_singer GROUP BY music_id) AS S, "
+				+ "(SELECT music_id, GROUP_CONCAT(songwriter) AS 'songwriter' FROM db2022_songwriter GROUP BY music_id) AS SW "
+				+ "WHERE (singer = ?) AND (db2022_music.music_id = S.music_id) AND (db2022_music.music_id = SW.music_id)";
+		
+		
 		try(Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-				Statement stmt = conn.createStatement();) {
+			Statement stmt = conn.createStatement();
+			PreparedStatement pStmt = conn.prepareStatement(query);) {
 			
-			System.out.println("------------------------------------------");
-			System.out.println("**** [" + singer + "] 가수 검색 결과 ****");
-			System.out.println("------------------------------------------");
+			pStmt.setString(1, singer);
+			ResultSet rset = pStmt.executeQuery();
+			
+			
+			System.out.println(" **** [" + singer + "] 가수명 검색 결과 ****");
+			System.out.println("---------------------------------------------------------------------------------------------");
+    		System.out.println("    제목    |    가수    |    작사작곡    |    재생시간    |    좋아요 수    |    장르    |    발매일    ");
+    		System.out.println("---------------------------------------------------------------------------------------------");
         	
-			stmt.executeUpdate("use db2022team06");
-            ResultSet rset = stmt.executeQuery(query);
-            
+			
             if(!rset.next()) {
             	System.out.println("해당 가수명을 가진 음악이 없습니다.");
             }
             else {
             	do {
-            		System.out.println(rset.getString("title") + " (" + rset.getString("playtime") + ")");
+            		System.out.println(rset.getString("title") + " | " 
+            							+ rset.getString("singer") + " | "
+            							+ rset.getString("songwriter") + " | "
+            							+ rset.getString("playtime") + " | "
+            							+ rset.getString("likes") + " | "
+            							+ rset.getString("genre") + " | "
+            							+ rset.getString("release_date") + " | ");
             	}
             	while(rset.next());
             	System.out.println();

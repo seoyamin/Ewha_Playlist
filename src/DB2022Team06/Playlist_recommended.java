@@ -122,18 +122,34 @@ public class Playlist_recommended {
     // 각각의 플레이리스트를 출력하는 메소드
 	public void show_playlist(int topicNum, String detail) {
 		String topicList_eng[] = {"situation", "season", "music_age"};
-		String query = "SELECT title, playtime FROM db2022_music WHERE " + topicList_eng[topicNum] + " = \"" + detail + "\"";
+		String query = "SELECT title, singer, songwriter, playtime, likes, genre, release_date "
+				+ "FROM db2022_music,  "
+				+ "(SELECT music_id, GROUP_CONCAT(singer) AS 'singer' FROM db2022_singer GROUP BY music_id) AS S, "
+				+ "(SELECT music_id, GROUP_CONCAT(songwriter) AS 'songwriter' FROM db2022_songwriter GROUP BY music_id) AS SW "
+				+ "WHERE ( " + topicList_eng[topicNum] + " = ?) AND (db2022_music.music_id = S.music_id) AND (db2022_music.music_id = SW.music_id)";
+		
+		
 		try(Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-				Statement stmt = conn.createStatement();) {
+			Statement stmt = conn.createStatement();
+			PreparedStatement pStmt = conn.prepareStatement(query);) {
 			
-			System.out.println("-------------------------------");
-			System.out.println("**** [" + detail + "] 추천 플레이리스트 ****");
-			System.out.println("-------------------------------");
+			pStmt.setString(1, detail);
+			ResultSet rset = pStmt.executeQuery();
+			
+			System.out.println(" **** [" + detail + "] 추천 플레이리스트 ****");
+			System.out.println("---------------------------------------------------------------------------------------------");
+    		System.out.println("    제목    |    가수    |    작사작곡    |    재생시간    |    좋아요 수    |    장르    |    발매일    ");
+    		System.out.println("---------------------------------------------------------------------------------------------");
+			
         	
-			stmt.executeUpdate("use db2022team06");
-            ResultSet rset = stmt.executeQuery(query);
             while(rset.next()) {
-            	System.out.println(rset.getString("title") + " (" + rset.getString("playtime") + ")");
+            	System.out.println(rset.getString("title") + " | " 
+						+ rset.getString("singer") + " | "
+						+ rset.getString("songwriter") + " | "
+						+ rset.getString("playtime") + " | "
+						+ rset.getString("likes") + " | "
+						+ rset.getString("genre") + " | "
+						+ rset.getString("release_date") + " | ");
             }
             System.out.println();
             
