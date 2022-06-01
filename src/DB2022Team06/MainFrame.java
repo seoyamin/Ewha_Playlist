@@ -46,6 +46,7 @@ class MyListener implements ActionListener{
         	
         case 4: 
         	//음악 검색
+        	new Search(contentpane, mainframe, panel);
         	break; 
         	
         case 5:
