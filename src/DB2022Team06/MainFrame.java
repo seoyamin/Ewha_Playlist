@@ -61,7 +61,14 @@ class MyListener implements ActionListener{
         	break;
         	
         case 7:
+        	if(USERINFO.user_id==-1) { //회원가입 안한 상태라면
+        		new SigninPage(contentpane, mainframe, panel); //회원 가입 창으로
+        	}
+        	else { //회원가입 한 상태라면
+        		//개인정보 조회 및 수정 창으로 
         	new MyPage(contentpane, mainframe, panel);
+        	}
+        	
         	break;
         }
     }

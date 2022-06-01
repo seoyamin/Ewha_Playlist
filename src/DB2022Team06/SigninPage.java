@@ -8,7 +8,9 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,15 +19,14 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-class UpdateGenre {
+class Signin {
     private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String USERNAME = "DB2022Team06";//DBMS접속 시 아이디
     private static final String PASSWORD = "DB2022Team06";//DBMS접속 시 비밀번호
     private static final String URL = "jdbc:mysql://localhost:3306/DB2022Team06"; //DBMS접속할 db명 - 로컬 상황에 맞게 바꿔서 사용해주세요
     
-    public UpdateGenre(String favorite_genre) {
- 
+    public Signin(String name,String nickname,int age,String favorite_genre) {
+
     	
     	List<String> list = new ArrayList<>(Arrays.asList("KPOP","발라드","랩/힙합","POP","트로트","록/메탈"));
     	
@@ -41,20 +42,41 @@ class UpdateGenre {
             try {
             	
             PreparedStatement pStmt = conn.prepareStatement( 
-            		"UPDATE db2022_user SET favorite_genre=? where user_id=?;");
-           
-            pStmt.setString(1,favorite_genre );
-            pStmt.setInt(2,USERINFO.user_id);
-            
+            		"INSERT INTO db2022_user(name,nickname,age,favorite_genre) VALUES(?,?,?,?)");
+
+            pStmt.setString(1, name);
+            pStmt.setString(2, nickname);
+            pStmt.setInt(3, age);
+            pStmt.setString(4, favorite_genre);
             pStmt.executeUpdate();
             pStmt.close();
-          
-            System.out.println("선호장르가 정상적으로 변경되었습니다." );
+            
+            
+            // 유저 정보 저장
+            System.out.println("[회원가입 완료]"+nickname+"유저가 등록되었습니다 ");
+            USERINFO.nickname=nickname; // 유저 정보 저장
+            USERINFO.age=age;
+            USERINFO.favorite_genre=favorite_genre;
+            
+            //user_id 가져오기
+            Statement stmt = conn.createStatement(); 
+            ResultSet rset = stmt.executeQuery(
+            		"select user_id from db2022_user where nickname=\""+nickname+"\"");
+            
+            int user_id=-1;
+            while(rset.next()) {
+            	user_id=rset.getInt("user_id");
+            }
+            
+            USERINFO.user_id=user_id;
+            
+            stmt.close();
+         
             }
            
             catch (SQLException sqle)
             {
-            System.out.println("선호장르를 수정할 수 없습니다. (이유 : id존재하지 않음 등)" + sqle);
+            System.out.println("중복된 닉네임이 존재합니다. 다른 닉네임으로 회원가입을 시도해주세요. " + sqle);
             }
             	
            
@@ -67,13 +89,13 @@ class UpdateGenre {
 }
 
 
-public class MyPage{
+public class SigninPage{
 	String[] btnList = new String[]{"이름","닉네임","나이","선호장르"};
 	JTextField[] textfieldList=new JTextField[4] ;
-
 	
-	MyPage(Container contentpane, MainFrame mainframe, JPanel mainmenu){ // 생성자
-		
+	SigninPage(Container contentpane, MainFrame mainframe, JPanel mainmenu){ // 생성자
+		Recommend_Model model = new Recommend_Model(); //sql 연결 함수를 사용하기 위한 객체 생성
+
 		JPanel mypagePannel = new JPanel();
 		mypagePannel.setLayout(null);
 		contentpane.add(mypagePannel);
@@ -112,58 +134,36 @@ public class MyPage{
 		
 		
 		
-		//유저 정보
 		
-			Font font = new Font("돋움", Font.PLAIN, 15);
-			JLabel name = new JLabel(USERINFO.name);
-			name.setFont(font);
-			name.setLocation(150, OFFSET+10);
-			name.setSize(200, 30);
-			mypagePannel.add(name);
-	
-			JLabel nickname = new JLabel(USERINFO.nickname);
-			nickname.setFont(font);
-			nickname.setLocation(150, OFFSET+110);
-			nickname.setSize(200, 30);
-			mypagePannel.add(nickname);
-			
-			
-			JLabel age = new JLabel(Integer.toString(USERINFO.age));
-			age.setFont(font);
-			age.setLocation(150, OFFSET+210);
-			age.setSize(200, 30);
-			mypagePannel.add(age);
-		
+		for(int i=0;i<btnList.length;i++) {
+			// 입력 텍스트 필드
 			JTextField tf = new JTextField(20);
-			tf.setLocation(150, OFFSET+310);
-			tf.setSize(150, 30);
-			tf.setText(USERINFO.favorite_genre); // 선호장르 초기값 지정
+			tf.setLocation(150, OFFSET+i*100+10);
+			tf.setSize(200, 30);
 			mypagePannel.add(tf);
+			textfieldList[i]=tf;
 			
-			JButton inputBtn = new JButton("수정");
-			inputBtn.setLocation(300,OFFSET+310);
-			inputBtn.setSize(70, 30);
-			inputBtn.setForeground(Color.WHITE);
-			inputBtn.setBackground(Color.GRAY);
-			mypagePannel.add(inputBtn);
-			
+		}
 		
-		
+		Font font = new Font("돋움", Font.PLAIN, 15);
 		JLabel la = new JLabel("제공하는 장르: KPOP,발라드,랩/힙합,POP,트로트,록/메탈");
 		la.setFont(font);
 		la.setLocation(30,500); 
 		la.setSize(450,50); 
 		mypagePannel.add(la);
 		
-		
-	
-		
+		JButton inputBtn = new JButton("회원가입");
+		inputBtn.setLocation(150, 600);
+		inputBtn.setSize(100, 40);
+		inputBtn.setForeground(Color.WHITE);
+		inputBtn.setBackground(Color.GRAY);
+		mypagePannel.add(inputBtn);
 		
 		inputBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//데이터 입력에 따라 처리
 	
-				new UpdateGenre(tf.getText());
+				new Signin(textfieldList[0].getText(),textfieldList[1].getText(),Integer.parseInt(textfieldList[2].getText()),textfieldList[3].getText());
 				//model.recommend(nickname.getText()); //입력된 nickname 값을 인자로 넘겨 recommend() 함수 실행
 				//System.out.println(nickname.getText());
 			}
