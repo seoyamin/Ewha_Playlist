@@ -61,7 +61,7 @@ class MyListener implements ActionListener{
         	break;
         	
         case 7:
-        	//마이페이지
+        	new MyPage(contentpane, mainframe, panel);
         	break;
         }
     }
