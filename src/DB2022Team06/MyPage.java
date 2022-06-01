@@ -5,12 +5,66 @@ import java.awt.Container;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+class Signin {
+    private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static final String USERNAME = "DB2022Team06";//DBMS접속 시 아이디
+    private static final String PASSWORD = "DB2022Team06";//DBMS접속 시 비밀번호
+    private static final String URL = "jdbc:mysql://localhost:3306/DB2022Team06"; //DBMS접속할 db명 - 로컬 상황에 맞게 바꿔서 사용해주세요
+    
+    public Signin(String name,String nickname,int age,String genre) {
 
+    	
+    	List<String> list = new ArrayList<>(Arrays.asList("KPOP","발라드","랩/힙합","POP","트로트","록/메탈"));
+    	
+    	if(!list.contains(genre)) {
+    		System.out.println("유효한 장르를 입력해주세요!");
+    		return;
+    	}
+    	
+    	try {
+        	Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            System.out.println("connection success");
+           
+            try {
+            	
+            PreparedStatement pStmt = conn.prepareStatement( 
+            		"INSERT INTO db2022_user(name,nickname,age,favorite_genre) VALUES(?,?,?,?)");
+
+            pStmt.setString(1, name);
+            pStmt.setString(2, nickname);
+            pStmt.setInt(3, age);
+            pStmt.setString(4, genre);
+            pStmt.executeUpdate();
+	   
+            System.out.println("[회원가입 완료]"+nickname+"유저가 등록되었습니다 ");
+            pStmt.close();
+            }
+           
+            catch (SQLException sqle)
+            {
+            System.out.println("중복된 닉네임이 존재합니다. 다른 닉네임으로 회원가입을 시도해주세요. " + sqle);
+            }
+            	
+           
+            conn.close();
+            
+        } catch (SQLException e1) {
+        	System.out.println("connection fail");
+        }
+    }
+}
 public class MyPage{
 	String[] btnList = new String[]{"이름","닉네임","나이","선호장르"};
 	JTextField[] textfieldList=new JTextField[4] ;
@@ -84,6 +138,8 @@ public class MyPage{
 		inputBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//데이터 입력에 따라 처리
+				
+				new Signin(textfieldList[0].getText(),textfieldList[1].getText(),Integer.parseInt(textfieldList[2].getText()),textfieldList[3].getText());
 				//model.recommend(nickname.getText()); //입력된 nickname 값을 인자로 넘겨 recommend() 함수 실행
 				//System.out.println(nickname.getText());
 			}
