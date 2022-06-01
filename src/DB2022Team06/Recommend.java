@@ -15,6 +15,8 @@ import javax.swing.JTextField;
 public class Recommend{
 
 	Recommend(Container contentpane, MainFrame mainframe, JPanel panel){ // 생성자
+		Recommend_Model model = new Recommend_Model(); //sql 연결 함수를 사용하기 위한 객체 생성
+
 		mainframe.setTitle("음악정보관리시스템 이플리 DBMS");
 		mainframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		JPanel recommendPanel = new JPanel();
@@ -61,8 +63,8 @@ public class Recommend{
 		inputBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//데이터 입력에 따라 처리
-				//a = nickname.getText();
-				System.out.println(nickname.getText());
+				model.recommend(nickname.getText()); //입력된 nickname 값을 인자로 넘겨 recommend() 함수 실행
+				//System.out.println(nickname.getText());
 			}
 		});
 		
