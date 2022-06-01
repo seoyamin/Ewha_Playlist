@@ -14,7 +14,7 @@ public class music_Info_insert extends JFrame {
     private static final String USERNAME = "DB2022Team06";//DBMS접속 시 아이디
     private static final String PASSWORD = "DB2022Team06";//DBMS접속 시 비밀번호
     private static final String URL = "jdbc:mysql://localhost:3306/DB2022Team06";
-
+    
 
     public void insert(String nickname, String title, String singer) {
     	String query="insert into db2022_playlist_user(user_id, music_id,genre,age_limit) "
@@ -81,6 +81,7 @@ public class music_Info_insert extends JFrame {
 		setVisible(true);
 		setTitle("곡명, 가수명 검색");
 		setSize(500, 500);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		jPanel.setLayout(null);// 배치관리자 해제
 		
 		JLabel music=new JLabel("곡명");

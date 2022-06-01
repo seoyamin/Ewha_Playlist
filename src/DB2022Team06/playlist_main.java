@@ -62,6 +62,7 @@ public class playlist_main extends JFrame {
 		setSize(500,500);
 		setVisible(true);
 		setLayout(null);// 배치관리자 해제
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		JLabel jLabel=new JLabel(nickname+"의 플레이리스트");
 		jPanel.add(jLabel,BorderLayout.CENTER);

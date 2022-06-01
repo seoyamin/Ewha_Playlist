@@ -17,11 +17,8 @@ public class music_Info_delete extends JFrame {
 
 
     public void delete(String nickname, String title, String singer) {
-    	String query="insert into db2022_playlist_user(user_id, music_id,age_limit) "
-    			+ "values((select user_id from db2022_user where nickname=?),(select T.music_id from db2022_music as T,db2022_singer as S where (T.title=?) and (S.singer=?)),(select T.age_limit from db2022_music as T,db2022_singer as S where (T.title=?) and (S.singer=?)))";
+    	String query="delete from db2022_playlist_user where user_id=(select user_id from db2022_user where nickname=?) and music_id=(select T.music_id from db2022_music as T,db2022_singer as S where (T.title=?) and (S.singer=?))";
     	int age=0,bool=0;
-    	
-    	//delete from db2022_playlist_user where ((select user_id from db2022_user where nickname='ju') and (select T.music_id from db2022_music as T,db2022_singer as S where (T.title='ZOOM') and (S.singer='제시')))
     	
 		try {
 			System.out.println(nickname);
@@ -55,28 +52,15 @@ public class music_Info_delete extends JFrame {
 			            pStmt.setString(1, nickname);
 			            pStmt.setString(2, title);
 			            pStmt.setString(3, singer);
-			            pStmt.setString(4, title);
-			            pStmt.setString(5, singer);
 			            pStmt.executeUpdate();
 			            
-			            System.out.println("Successfully Add\n");
+			            System.out.println("Successfully DELETE\n");
 			            System.out.println("---------------------------------------------------------------\n");
 			            conn.commit();
 					}
 				}
 			}
 		}
-			
-		/*	PreparedStatement pStmt = conn.prepareStatement(query);
-
-            pStmt.setString(1, nickname);
-            pStmt.setString(2, title);
-            pStmt.setString(3, singer);
-            pStmt.executeUpdate();
-            
-            System.out.println("Successfully Add\n");
-            System.out.println("---------------------------------------------------------------\n");
-            conn.commit();*/
 		
 		catch (SQLException e1) {
 			e1.printStackTrace();
@@ -92,6 +76,7 @@ public class music_Info_delete extends JFrame {
 		setVisible(true);
 		setTitle("곡명, 가수명 검색");
 		setSize(500, 500);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		jPanel.setLayout(null);// 배치관리자 해제
 		
 		JLabel music=new JLabel("곡명");
@@ -120,7 +105,7 @@ public class music_Info_delete extends JFrame {
 		box2.setLocation(100, 30);
 		box2.setSize(100, 19);
 		
-		JButton btn=new JButton("추가");
+		JButton btn=new JButton("삭제");
 		jPanel.add(btn);
 		btn.setVisible(true);
 		btn.setSize(100, 30);
