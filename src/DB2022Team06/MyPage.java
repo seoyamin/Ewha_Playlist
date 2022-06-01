@@ -47,6 +47,8 @@ class UpdateGenre {
             pStmt.setInt(2,USERINFO.user_id);
             
             pStmt.executeUpdate();
+            
+            USERINFO.favorite_genre=favorite_genre;
             pStmt.close();
           
             System.out.println("선호장르가 정상적으로 변경되었습니다." );
@@ -164,8 +166,7 @@ public class MyPage{
 				//데이터 입력에 따라 처리
 	
 				new UpdateGenre(tf.getText());
-				//model.recommend(nickname.getText()); //입력된 nickname 값을 인자로 넘겨 recommend() 함수 실행
-				//System.out.println(nickname.getText());
+				
 			}
 		});
 		
