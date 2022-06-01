@@ -33,24 +33,33 @@ class SelectMusicList {
             	 ResultSet rset;
             	if(genre=="전체") {
             		   rset = stmt.executeQuery(
-                       		"select * from db2022_music"
+            				   "with TMP AS( \r\n"
+            		            		+ "select music_id,title,playtime,likes,genre,age_limit,release_date, GROUP_CONCAT(songwriter SEPARATOR ',') as songwriter \r\n"
+            		            		+ "from db2022_music natural join db2022_songwriter group by music_id) \r\n"
+            		            		+ "SELECT music_id,title,playtime,songwriter,likes,genre,age_limit,release_date,GROUP_CONCAT(singer SEPARATOR ',')\r\n"
+            		            		+ "from TMP natural join db2022_singer group by music_id "
                        	);
             		   System.out.println("<전체 음원 목록>\n");
+            		   
+            			while (rset.next()) {
+                			
+                			System.out.println(rset.getString("music_id")+" | "+rset.getString("title")+" | "+rset.getTime("playtime")+" | "+rset.getString("GROUP_CONCAT(singer SEPARATOR ',')")+" | "+rset.getString("songwriter")+" | "+rset.getInt("likes")+" | "+rset.getString("genre")+" | "+rset.getDate("release_date"));
+                		}
             	}
             	else {
             		 rset = stmt.executeQuery(
                      		"select * from db2022_music where genre=\""+genre+"\""
                      	);
-            		 System.out.println("장르가"+genre+"인곡\n");
-                     
-            	}
-           
-
-		
-            		while (rset.next()) {
-            			
-            		System.out.println(rset.getInt(1)+" "+rset.getString("title")+" "+rset.getTime("playtime")+" "+rset.getInt("likes")+" "+rset.getString("genre")+" "+rset.getDate("release_date"));
-            		}
+            		 System.out.println("장르가 "+genre+"인곡 목록\n");
+            		 System.out.println("id|타이틀|재생시간|장르|좋아요|발매일\n");
+            		 while (rset.next()) {
+             			
+                 		System.out.println(rset.getInt(1)+" | "+rset.getString("title")+" | "+rset.getTime("playtime")+" | "+rset.getString("genre")+" | "+rset.getInt("likes")+" | "+rset.getDate("release_date"));
+                 		}
+            		 
+            		 }
+            	
+            		
             
             }
             catch (SQLException sqle)
@@ -70,8 +79,7 @@ class SelectMusicList {
 class SelectMusicListener implements ActionListener{
 	 
 	int btnNum;  // 어떤 버튼 눌렀는지 
-	
-	
+
 	public SelectMusicListener(int btnNum){
 		this.btnNum = btnNum;
 	
@@ -161,8 +169,7 @@ public class MusicList {
    public static void main(String[] args) {
       // TODO Auto-generated method stub
       // 보이도록하기.
-      
-      
+
       
    }
 
