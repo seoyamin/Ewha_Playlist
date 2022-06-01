@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
 
 import javax.swing.JButton;
@@ -210,11 +211,11 @@ public class Management2{
 					/*오류 잡기용*/
 					SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
 					String pt = playtimeTf.getText();
-					String playtimeInfo;
+					Date playtimeInfo;
 					
 					SimpleDateFormat formatter2 = new SimpleDateFormat("yyyy-mm-dd");
 					String rd = rdTf.getText();
-					String rdInfo;
+					Date rdInfo;
 					
 					boolean limitInfo;
 					
@@ -231,13 +232,12 @@ public class Management2{
 						
 						likesInfo = Integer.parseInt(likesTf.getText());
 						
-						playtimeInfo = playtimeTf.getText();
-						rdInfo = rdTf.getText();
 						
-						formatter.parse(pt);
-						formatter2.parse(rd);
 						
-						model.insert(playtimeInfo, titleInfo, likesInfo, genreInfo, limitInfo, rdInfo, situInfo, seasonInfo, maInfo);
+						playtimeInfo = formatter.parse(pt);
+						rdInfo = formatter2.parse(rd);
+						
+						model.insert(playtimeInfo, titleInfo, likesInfo, genreInfo, limitInfo, rdInfo, situInfo, seasonInfo, maInfo, writerInfo, singerInfo);
 						
 					}catch (ParseException e1) { //date 관련
 						// TODO Auto-generated catch block
