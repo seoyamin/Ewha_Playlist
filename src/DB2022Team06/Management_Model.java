@@ -1,6 +1,7 @@
 package DB2022Team06;
 
 import java.sql.*;
+import java.util.Date;
 
 
 public class Management_Model {
@@ -10,7 +11,7 @@ public class Management_Model {
     private static final String PASSWORD = "DB2022Team06"; //DBMS 접속 시 비밀번호
     private static final String URL = "jdbc:mysql://localhost:3306/DB2022Team06"; //DBMS 접속할 DB
     
-    public Management_Model(int i) {
+    public void insert(String playtime, String title, int likes, String genre, boolean age_limit, String release_date, String situation, String season, int music_age) {
     	
         try (
         	Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
