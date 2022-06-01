@@ -9,6 +9,8 @@ create table db2022_songwriter (
     primary key(music_id, songwriter)
 ) default character set utf8 collate utf8_unicode_ci;
 
+create index index_songwriter on db2022_songwriter(music_id, songwriter);
+
 INSERT INTO db2022_songwriter VALUES
 (1,"제시"),
 (1,"싸이"),
@@ -101,6 +103,8 @@ create table db2022_singer (
     primary key(music_id, singer)
 ) default character set utf8 collate utf8_unicode_ci;
 
+create index index_singer on db2022_singer(music_id, singer);
+
 INSERT INTO db2022_singer VALUES
 (1,"제시"),
 (2,"(여자)아이들"),
@@ -150,6 +154,8 @@ create table db2022_music (
     primary key(music_id),
     check (genre in ('랩/힙합','POP','KPOP','트로트','발라드','록/메탈','없음'))
 ) default character set utf8 collate utf8_unicode_ci;
+
+create index index_music on db2022_music(music_id);
 
 INSERT INTO db2022_music(playtime,title,likes,genre,age_limit,release_date,situation,season,music_age) VALUES
 ("00:02:54","ZOOM",34498,"랩/힙합",false,"2022-04-13","운동","여름",10 ),
