@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,6 +25,8 @@ class MyListener implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton button = (JButton)e.getSource();
+        
+        if(btnNum!=1)
         panel.setVisible(false); // 메인화면 내용 보이지 않게 하기
         
         switch(btnNum) {
@@ -32,7 +35,7 @@ class MyListener implements ActionListener{
         	break;
         	
         case 1: 
-        	//TOP 10 
+        	new TOP10(); 
         	break;
         
         case 2: 
