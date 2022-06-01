@@ -1,7 +1,8 @@
-#CREATE DATABASE DB2022Team06 default character set utf8 collate utf8_unicode_ci;
+# CREATE DATABASE DB2022Team06 default character set utf8 collate utf8_unicode_ci;
 
 use DB2022Team06;
 
+# 각 곡의 작사작곡가 정보를 담은 테이블 생성 - music id, 작사작곡가명
 create table db2022_songwriter (
     music_id int,
     songwriter varchar(45),
@@ -93,6 +94,7 @@ INSERT INTO db2022_songwriter VALUES
 (29,"Brian Harold May"),
 (30,"김윤아");
 
+# 각 곡의 가수 정보를 담은 테이블 생성 - music id, 가수명
 create table db2022_singer (
     music_id int,
     singer varchar(45),
@@ -133,6 +135,7 @@ INSERT INTO db2022_singer VALUES
 (29,"Queen"),
 (30,"자우림");
 
+# 각 곡의 정보를 담은 테이블 생성 - 재생시간, 제목, 좋아요 수, 장르, 나이제한 여부, 발매일, 상황 추천, 계절 추천, 나이대 추천
 create table db2022_music (
     music_id int AUTO_INCREMENT,
     playtime Time, 
@@ -156,9 +159,9 @@ INSERT INTO db2022_music(playtime,title,likes,genre,age_limit,release_date,situa
 ("00:02:17","MONTERO(Call Me By Your Name)",23000,"랩/힙합",true,"2021-04-23","여행","봄",20 ),
 ("00:02:48","abcdefu",92667,"POP",true,"2021-08-13","공부","가을",20 ),
 ("00:02:49","Let Me Down Slowly",38428,"POP",false,"2018-11-16","공부","봄",10 ),
-("00:03:24","Santa Tell Me",215428,"POP",false,null,"여행","겨울",30 ),
+("00:03:24","Santa Tell Me",215428,"POP",false,"2014-11-24","여행","겨울",30 ),
 ("00:03:18","Peaches",213596,"POP",true,"2021-10-08","여행","봄",20 ),
-("00:03:29","Dance Monkey",169935,"POP",false,null,"출퇴근","가을",30 ),
+("00:03:29","Dance Monkey",169935,"POP",false,"2019-05-10","출퇴근","가을",30 ),
 ("00:03:38","아모르 파티",72806,"트로트",false,"2013-07-23","운동","여름",50 ),
 ("00:04:02","이젠 나만 믿어요",154066,"트로트",false,"2020-04-03","여행","겨울",50 ),
 ("00:03:26","사랑의 배터리",29114,"트로트",false,"2009-06-19","운동","여름",40 ),
@@ -176,24 +179,33 @@ INSERT INTO db2022_music(playtime,title,likes,genre,age_limit,release_date,situa
 ("00:04:50","어떻게 이별까지 사랑하겠어, 널 사랑하는 거지",381043,"발라드",false,"2019-09-25","여행","겨울",30 ),
 ("00:03:48","비밀번호 486",57584,"록/메탈",false,"2007-03-15","여행","겨울",30 ),
 ("00:03:48","집에",10579,"록/메탈",false,"2019-10-04","출퇴근","가을",20 ),
-("00:02:54","American Idiot",6010,"록/메탈",false,"2004-09-21","운동","봄",30 ),
+("00:02:54","American Idiot",6010,"록/메탈",true,"2004-09-21","운동","봄",30 ),
 ("00:02:01","We Will Rock You",31157,"록/메탈",false,"1977-10-07","운동","가을",20 ),
-("00:04:45","스물다섯, 스물하나",185117,"록/메탈",true,"2022-04-13","여행","가을",40 );
+("00:04:45","스물다섯, 스물하나",185117,"록/메탈",false,"2022-04-13","여행","가을",40 );
 
+# 유저 정보 테이블 생성 - user id, 이름, 닉네임, 나이, 선호 장르
 create table db2022_user (
     user_id int,
     name varchar(45),
-    nickname varchar(45),
+    nickname varchar(45) unique,
     age int,
     favorite_genre varchar(45),
     primary key(user_id)
 ) default character set utf8 collate utf8_unicode_ci;
 
+# 마이 플레이리스트 테이블 생성 - user id, music id, 곡의 나이 제한 여부, 곡의 장르
 create table db2022_playlist_user (
     user_id int,
     music_id int,
+    genre varchar(45),
     age_limit boolean,
     primary key(user_id, music_id),
     foreign key(user_id) references db2022_user(user_id),
     foreign key(music_id) references db2022_music(music_id)
 ) default character set utf8 collate utf8_unicode_ci;
+
+# 곡 정보 view 생성 - music id, 제목, 가수, 작사작곡가, 재생시간, 좋아요 수, 장르, 발매일, 나이 제한 여부
+create view db2022_song_info as
+    select music_id, title, singer, songwriter, playtime, likes, genre, release_date, age_limit
+    from db2022_music natural join db2022_singer natural join db2022_songwriter 
+    where db2022_music.music_id = db2022_singer.music_id and db2022_music.music_id = db2022_songwriter.music_id;
