@@ -24,6 +24,8 @@ class MyListener implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton button = (JButton)e.getSource();
+        
+        if(btnNum!=1)
         panel.setVisible(false); // 메인화면 내용 보이지 않게 하기
         
         switch(btnNum) {
@@ -32,11 +34,12 @@ class MyListener implements ActionListener{
         	break;
         	
         case 1: 
-        	//TOP 10 
+        	new TOP10(); 
         	break;
         
         case 2: 
         	//나만의 플레이 리스트
+        	new Nickname(contentpane, mainframe, panel);
         	break;
         	
         case 3: 
@@ -58,7 +61,14 @@ class MyListener implements ActionListener{
         	break;
         	
         case 7:
-        	//마이페이지
+        	if(USERINFO.user_id==-1) { //회원가입 안한 상태라면
+        		new SigninPage(contentpane, mainframe, panel); //회원 가입 창으로
+        	}
+        	else { //회원가입 한 상태라면
+        		//개인정보 조회 및 수정 창으로 
+        	new MyPage(contentpane, mainframe, panel);
+        	}
+        	
         	break;
         }
     }

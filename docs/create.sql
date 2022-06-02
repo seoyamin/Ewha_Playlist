@@ -201,7 +201,7 @@ create table db2022_user (
 
 # 마이 플레이리스트 테이블 생성 - user id, music id, 곡의 나이 제한 여부, 곡의 장르
 create table db2022_playlist_user (
-    user_id int,
+    user_id int ,
     music_id int,
     genre varchar(45),
     age_limit boolean,
@@ -215,3 +215,8 @@ create view db2022_song_info as
     select music_id, title, singer, songwriter, playtime, likes, genre, release_date, age_limit
     from db2022_music natural join db2022_singer natural join db2022_songwriter 
     where db2022_music.music_id = db2022_singer.music_id and db2022_music.music_id = db2022_songwriter.music_id;
+    
+create view db2022_all_song as
+    select title, singer
+    from db2022_music natural join db2022_singer
+    where db2022_music.music_id = db2022_singer.music_id;
