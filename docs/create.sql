@@ -209,3 +209,8 @@ create view db2022_song_info as
     select music_id, title, singer, songwriter, playtime, likes, genre, release_date, age_limit
     from db2022_music natural join db2022_singer natural join db2022_songwriter 
     where db2022_music.music_id = db2022_singer.music_id and db2022_music.music_id = db2022_songwriter.music_id;
+    
+create view db2022_all_song as
+    select title, singer
+    from db2022_music natural join db2022_singer
+    where db2022_music.music_id = db2022_singer.music_id;

@@ -49,7 +49,7 @@ public class playlist_main extends JFrame {
 				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 				Statement stmt = conn.createStatement(); 
 	            //stmt.executeQuery("use DB2022Team06");
-	            ResultSet rs = stmt.executeQuery("select title, singer from db2022_music, db2022_singer where db2022_music.music_id=db2022_singer.music_id");
+	            ResultSet rs = stmt.executeQuery("select * from db2022_all_song");
 	            System.out.println("_____________________________");
             	System.out.println("전체 음악 목록 조회");
             	System.out.println("_____________________________");
