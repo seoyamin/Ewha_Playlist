@@ -213,11 +213,8 @@ create table db2022_playlist_user (
 ) default character set utf8 collate utf8_unicode_ci;
 
 create view db2022_all_song_adult as
-    select title, singer
-    from db2022_music natural join db2022_singer
-    where db2022_music.music_id = db2022_singer.music_id;
+    select title,age_limit, GROUP_CONCAT(singer SEPARATOR ',') as singer
+    from db2022_music natural join db2022_singer group by music_id;
     
 create view db2022_all_song_minor as
-    select title, singer
-    from db2022_music natural join db2022_singer
-    where db2022_music.music_id = db2022_singer.music_id and db2022_music.age_limit=false;
+   select title,singer from db2022_all_song_adult where age_limit=false;
