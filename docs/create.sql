@@ -9,6 +9,8 @@ create table db2022_songwriter (
     primary key(music_id, songwriter)
 ) default character set utf8 collate utf8_unicode_ci;
 
+create index index_songwriter on db2022_songwriter(music_id, songwriter);
+
 INSERT INTO db2022_songwriter VALUES
 (1,"제시"),
 (1,"싸이"),
@@ -101,6 +103,8 @@ create table db2022_singer (
     primary key(music_id, singer)
 ) default character set utf8 collate utf8_unicode_ci;
 
+create index index_singer on db2022_singer(music_id, singer);
+
 INSERT INTO db2022_singer VALUES
 (1,"제시"),
 (2,"(여자)아이들"),
@@ -151,6 +155,8 @@ create table db2022_music (
     check (genre in ('랩/힙합','POP','KPOP','트로트','발라드','록/메탈','없음'))
 ) default character set utf8 collate utf8_unicode_ci;
 
+create index index_music on db2022_music(music_id);
+
 INSERT INTO db2022_music(playtime,title,likes,genre,age_limit,release_date,situation,season,music_age) VALUES
 ("00:02:54","ZOOM",34498,"랩/힙합",false,"2022-04-13","운동","여름",10 ),
 ("00:02:40","MY BAG",51204,"랩/힙합",false,"2022-03-14","출퇴근","여름",10 ),
@@ -185,7 +191,7 @@ INSERT INTO db2022_music(playtime,title,likes,genre,age_limit,release_date,situa
 
 # 유저 정보 테이블 생성 - user id, 이름, 닉네임, 나이, 선호 장르
 create table db2022_user (
-    user_id int,
+    user_id int AUTO_INCREMENT,
     name varchar(45),
     nickname varchar(45) unique,
     age int,
@@ -193,9 +199,11 @@ create table db2022_user (
     primary key(user_id)
 ) default character set utf8 collate utf8_unicode_ci;
 
+create index index_music on db2022_user(user_id);
+
 # 마이 플레이리스트 테이블 생성 - user id, music id, 곡의 나이 제한 여부, 곡의 장르
 create table db2022_playlist_user (
-    user_id int,
+    user_id int ,
     music_id int,
     genre varchar(45),
     age_limit boolean,
@@ -204,8 +212,7 @@ create table db2022_playlist_user (
     foreign key(music_id) references db2022_music(music_id)
 ) default character set utf8 collate utf8_unicode_ci;
 
-# 곡 정보 view 생성 - music id, 제목, 가수, 작사작곡가, 재생시간, 좋아요 수, 장르, 발매일, 나이 제한 여부
-create view db2022_song_info as
-    select music_id, title, singer, songwriter, playtime, likes, genre, release_date, age_limit
-    from db2022_music natural join db2022_singer natural join db2022_songwriter 
-    where db2022_music.music_id = db2022_singer.music_id and db2022_music.music_id = db2022_songwriter.music_id;
+create view db2022_all_song as
+    select title, singer
+    from db2022_music natural join db2022_singer
+    where db2022_music.music_id = db2022_singer.music_id;
