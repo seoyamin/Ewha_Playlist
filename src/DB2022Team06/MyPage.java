@@ -59,7 +59,7 @@ class UpdateGenre {
             System.out.println("선호장르를 수정할 수 없습니다. (이유 : id존재하지 않음 등)" + sqle);
             }
             	
-           
+            System.out.println("\n");
             conn.close();
             
         } catch (SQLException e1) {
