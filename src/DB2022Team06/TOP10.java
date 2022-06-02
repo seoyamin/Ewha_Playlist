@@ -17,7 +17,7 @@ public class TOP10 {
 
     	try {
         	Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            System.out.println("success");
+            //System.out.println("success");
             
             Statement stmt = conn.createStatement(); 
             
@@ -39,7 +39,6 @@ public class TOP10 {
             			
             		System.out.println(rank+"위: "+rset.getString("title")+" | "+rset.getTime("playtime")+" | "+rset.getString("GROUP_CONCAT(singer SEPARATOR ',')")+" | "+rset.getString("songwriter")+" | "+rset.getInt("likes")+" | "+rset.getString("genre")+" | "+rset.getDate("release_date"));
             		rank++;
-            		
             		
             		}
             

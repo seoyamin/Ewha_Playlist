@@ -36,7 +36,7 @@ class UpdateGenre {
     	
     	try {
         	Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            System.out.println("connection success");
+           // System.out.println("connection success");
            
             try {
             	
