@@ -20,19 +20,20 @@ import javax.swing.JOptionPane;
 
 public class Management2{
 	
-	JPanel pa1, pa2, pa3;
+	JPanel pa1, pa2;
 	Management_Model model = new Management_Model();
+	JButton goPrevBtn = new JButton("뒤로");
+	
 	
 	public Management2(Container contentpane, MainFrame mainframe, JPanel prevPanel, int btnNum) {
 		
-		JButton goPrevBtn = new JButton("뒤로");
 		
 		goPrevBtn.setLocation(10,10);
 		goPrevBtn.setSize(80,40);     
 		goPrevBtn.setForeground(Color.WHITE); //글씨 색상
 		goPrevBtn.setBackground(Color.GRAY);
 		
-		
+	
 		if(btnNum == 0) {
 			pa1 = new JPanel();
 			pa1.setLayout(null);
@@ -252,39 +253,78 @@ public class Management2{
 			contentpane.add(pa1);
 		}
 		
-		else if(btnNum == 1){
-			pa2 = new JPanel();
-			pa2.setLayout(null);
-			
-			goPrevBtn.addActionListener((ActionListener) new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					pa2.setVisible(false);
-					prevPanel.setVisible(true);
-				}
-			});
-			
-			
-			pa2.add(goPrevBtn);
-			
-			contentpane.add(pa2);
+		else {
+			this.insertInfo(contentpane, prevPanel, btnNum);
 		}
-		else if(btnNum == 2){
-			pa3 = new JPanel();
-			pa3.setLayout(null);
-			
-			goPrevBtn.addActionListener((ActionListener) new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					pa3.setVisible(false);
-					prevPanel.setVisible(true);
-				}
-			});
-			pa3.add(goPrevBtn);
-			contentpane.add(pa3);
-		}
+	}
+	public void insertInfo(Container contentpane, JPanel prevPanel, int btnNum) {
+		pa2 = new JPanel();
+		pa2.setLayout(null);
 		
 
+		goPrevBtn.setLocation(10,10);
+		goPrevBtn.setSize(80,40);     
+		goPrevBtn.setForeground(Color.WHITE); //글씨 색상
+		goPrevBtn.setBackground(Color.GRAY);
+		
+		goPrevBtn.addActionListener((ActionListener) new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pa2.setVisible(false);
+				prevPanel.setVisible(true);
+			}
+		});
+		
+		JLabel La = new JLabel("해당 곡의 정보를 입력하세요", JLabel.CENTER);
+		La.setFont(new Font("고딕", Font.BOLD, 17));
+		La.setSize(450,15);
+		La.setLocation(0, 60);
+		pa2.add(La);
+		
+		//가수 입력받기
+		JLabel singer = new JLabel("가수");
+		singer.setFont(new Font("고딕", Font.PLAIN, 15));
+		singer.setSize(40,80);
+		singer.setLocation(20,80);
+		pa2.add(singer);
+		
+		JTextField singerTf = new JTextField(45);
+		singerTf.setLocation(100, 105);
+		singerTf.setSize(200, 30);
+		pa2.add(singerTf);
+		
+		//제목 입력받기
+		JLabel title = new JLabel("제목");
+		title.setFont(new Font("고딕", Font.PLAIN, 15));
+		title.setSize(40,80);
+		title.setLocation(20,160);
+		pa2.add(title);
+		
+		JTextField titleTf = new JTextField(45);
+		titleTf.setLocation(100, 185);
+		titleTf.setSize(200, 30);
+		pa2.add(titleTf);
+		
+		JButton insertBtn = new JButton("확인");
+		insertBtn.setLocation(300,650);
+		insertBtn.setSize(80,40);
+		insertBtn.addActionListener((ActionListener) new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String singerInfo = singerTf.getText();
+				String titleInfo = titleTf.getText();
+				if(btnNum == 1) model.modify(singerInfo, titleInfo); else model.delete(singerInfo, titleInfo);
+			}
+		});
+		
+		
+		pa2.add(insertBtn);
+		
+		
+		pa2.add(goPrevBtn);
+		
+		contentpane.add(pa2);
 		
 		
 	}
+	
 }
 		

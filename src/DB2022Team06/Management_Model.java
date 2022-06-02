@@ -15,13 +15,17 @@ public class Management_Model {
     	String query1 = "insert into db2022_music values(?,?,?,?,?,?,?,?,?,?)";
     	String query2 = "insert into db2022_songwriter values(?,?)";
     	String query3 = "insert into db2022_singer values(?,?)";
+    	Connection conn = null;
     	
         try {
-        	Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        	conn.setAutoCommit(false);
+        	
+        	conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             Statement stmt = conn.createStatement();
         	PreparedStatement pStmt1 = conn.prepareStatement(query1, Statement.RETURN_GENERATED_KEYS);
         	PreparedStatement pStmt2 = conn.prepareStatement(query2);
         	PreparedStatement pStmt3 = conn.prepareStatement(query3);
+        	
         	
           	pStmt1.setInt(1,0);
         	pStmt1.setTimestamp(2, new java.sql.Timestamp(playtime.getTime()));
@@ -51,6 +55,9 @@ public class Management_Model {
         	pStmt3.setString(2, singer);
         	pStmt3.executeUpdate();
         	
+        	conn.commit();
+        	conn.setAutoCommit(true);
+        	
         	ResultSet rset;
         	rset = stmt.executeQuery("with TMP AS( \r\n"
             		+ "select music_id,title,playtime,likes,genre,age_limit,release_date, GROUP_CONCAT(songwriter SEPARATOR ',') as songwriter \r\n"
@@ -66,8 +73,81 @@ public class Management_Model {
      		
  			}
         }
-        catch (SQLException e1) {
-        	System.out.println("fail");
+        catch (SQLException sqle) {
+        	if(conn!=null)
+				try {
+					conn.rollback();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					System.out.println("fail");
+				}
         }
+    }
+    
+    public void delete(String singer, String title) {
+    	String query1 = "select music_id from db2022_music as m natural join db2022_singer as s where s.singer = ? and m.title = ? ";
+    	String query2 = "delete from db2022_music where music_id = ?"; 
+    	String query3 = "delete from db2022_singer where music_id = ?"; 
+    	String query4 = "delete from db2022_songwriter where music_id = ?"; 
+    	String query5 = "delete from db2022_play_list_user where music_id = ?"; //foreignkey 있음 얘 먼저 작업해야함.
+    	
+    	Connection conn = null;
+    	
+    	try {
+    		conn.setAutoCommit(false);
+         	conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+         	PreparedStatement pstmt1 = conn.prepareStatement(query1);
+         	pstmt1.setString(1, singer);
+         	pstmt1.setString(2, title);
+         	
+         	ResultSet rs = pstmt1.executeQuery();
+         	rs.next();
+         	int id = rs.getInt(1);
+         	
+         	PreparedStatement pstmt2 = conn.prepareStatement(query2);
+         	PreparedStatement pstmt3 = conn.prepareStatement(query3);
+         	PreparedStatement pstmt4 = conn.prepareStatement(query4);
+         	PreparedStatement pstmt5 = conn.prepareStatement(query5);
+         	
+         	pstmt2.setInt(1,id);
+         	pstmt3.setInt(1,id);
+         	pstmt4.setInt(1,id);
+         	pstmt5.setInt(1,id);
+         	pstmt5.executeUpdate();
+         	pstmt2.executeUpdate();
+         	pstmt3.executeUpdate();
+         	pstmt4.executeUpdate();
+         	conn.commit();
+         	conn.setAutoCommit(true);
+         	
+         	System.out.println("삭제 완료");
+         	
+    	 
+    	 }	
+    	 catch (SQLException e1) {
+    		 if(conn != null)
+				try {
+					conn.rollback();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					System.out.println("fail");
+				}
+         }
+    }
+    
+    public void modify(String singer, String title) {
+    	String query1 = "select music_id from db2022_music as m ntural join db2022_singer as s";
+    	
+    	 try {
+         	Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            Statement stmt = conn.createStatement();
+         	PreparedStatement pStmt1 = conn.prepareStatement(query1);
+         	
+         	pStmt1.setString(1, singer);
+         	pStmt1.setString(2, title);
+    	 }
+    	 catch (SQLException e1) {
+         	System.out.println("fail");
+         }
     }
 }
