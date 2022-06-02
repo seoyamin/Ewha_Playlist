@@ -12,7 +12,9 @@ public class Recommend_Model {
     private static final String URL = "jdbc:mysql://localhost:3306/DB2022Team06"; //DBMS 접속할 DB
     
     public void recommend(String nickname) {
-    	String query1 = "select * from db2022_music natural join db2022_user where (db2022_music.genre = db2022_user.favorite_genre and nickname = ?) or genre in (select genre from db2022_playlist_user natural join db2022_user where db2022_playlist_user.user_id = db2022_user.user_id and nickname = ?)";
+    	String query1 = "with fav_genre(genre) as (select distinct genre from db2022_music natural join db2022_user where (db2022_music.genre = db2022_user.favorite_genre and nickname = ?) "
+    			+ "or genre in (select genre from db2022_playlist_user natural join db2022_user where db2022_playlist_user.user_id = db2022_user.user_id and nickname = ?)) "
+    			+ "select * from db2022_music natural join db2022_user where genre in (select * from fav_genre) and nickname = ?;";
         String query2 = "select singer from db2022_singer where music_id = ?";
     	String query3 = "select songwriter from db2022_songwriter where music_id = ?";
         
@@ -26,6 +28,7 @@ public class Recommend_Model {
         {
         	pStmt1.setString(1, nickname);
         	pStmt1.setString(2, nickname);
+        	pStmt1.setString(3, nickname);
         	ResultSet rs1 = pStmt1.executeQuery();
         	
         	if(!rs1.next()) {
