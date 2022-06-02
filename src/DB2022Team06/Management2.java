@@ -24,7 +24,7 @@ public class Management2{
 	Management_Model model = new Management_Model();
 	JButton goPrevBtn = new JButton("뒤로");
 	int btnNum;
-	static int music_id;
+	static int music_num;
 	
 	public Management2(Container contentpane, MainFrame mainframe, JPanel prevPanel, int btnNum) {
 		
@@ -239,9 +239,9 @@ public class Management2{
 						
 						playtimeInfo = formatter.parse(pt);
 						rdInfo = formatter2.parse(rd);
-						if(btnNum == 1) {model.insert(playtimeInfo, titleInfo, likesInfo, genreInfo, limitInfo, rdInfo, situInfo, seasonInfo, maInfo, writerInfo, singerInfo);}
+						if(btnNum == 0) {model.insert(playtimeInfo, titleInfo, likesInfo, genreInfo, limitInfo, rdInfo, situInfo, seasonInfo, maInfo, writerInfo, singerInfo);}
 						else if(btnNum == 3) { //수정페이지
-							model.modify(music_id, playtimeInfo, titleInfo, likesInfo, genreInfo, limitInfo, rdInfo, situInfo, seasonInfo, maInfo, writerInfo, singerInfo);
+							model.modify(music_num, playtimeInfo, titleInfo, likesInfo, genreInfo, limitInfo, rdInfo, situInfo, seasonInfo, maInfo, writerInfo, singerInfo);
 						}
 						
 					}catch (ParseException e1) { //date 관련
@@ -320,8 +320,8 @@ public class Management2{
 					model.delete(singerInfo, titleInfo);
 				} 
 				else if(btnNum == 1) {
-					music_id = Management_Model.findMusic(singerInfo, titleInfo);
-					if (music_id == 0){
+					music_num = Management_Model.findMusic(singerInfo, titleInfo);
+					if (music_num == 0){
 						JOptionPane.showMessageDialog(null,"해당하는 곡이 없습니다.","Message", JOptionPane.ERROR_MESSAGE);
 					}
 					else {pa2.setVisible(false); new Management2(contentpane, mainframe, prevPanel, 3);}
