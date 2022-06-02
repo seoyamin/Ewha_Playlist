@@ -82,12 +82,12 @@ public class music_Info_delete extends JFrame {
 		add(jPanel);
 		setVisible(true);
 		setTitle("곡명, 가수명 검색");
-		setSize(500, 500);
+		setSize(450, 800);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		jPanel.setLayout(null);// 배치관리자 해제
 		Font font = new Font("돋움", Font.PLAIN, 20);
 		
-		JLabel labe=new JLabel("플레이리스트에서 삭제할 노래의 곡명과 가수명을 입력하세요");
+		JLabel labe=new JLabel("<html><body style='text-align:center'><body>플레이리스트에서 삭제할 노래의 <br/>곡명과 가수명을 입력하세요</body><html>");
 		jPanel.add(labe); labe.setVisible(true); labe.setLocation(60, 70); labe.setSize(400, 100); labe.setFont(font);
 		
 		JLabel music=new JLabel("곡명"); music.setFont(font); JLabel singer=new JLabel("가수명"); singer.setFont(font);
