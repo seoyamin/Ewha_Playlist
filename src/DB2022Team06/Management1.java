@@ -15,7 +15,7 @@ public class Management1{
 	Container contentpane;
 	MainFrame mainframe;
 	
-	String password = "pw"; //"DB2022Team06";
+	String password = "DB2022Team06";
 	
 	JPanel manaPa1;
 	JPanel manaPa2;
