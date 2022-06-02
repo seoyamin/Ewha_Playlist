@@ -288,25 +288,25 @@ public class Management2{
 		//가수 입력받기
 		JLabel singer = new JLabel("가수");
 		singer.setFont(new Font("고딕", Font.PLAIN, 15));
-		singer.setSize(40,80);
-		singer.setLocation(20,80);
+		singer.setSize(250, 100);
+		singer.setLocation(100,200);
 		pa2.add(singer);
 		
 		JTextField singerTf = new JTextField(45);
-		singerTf.setLocation(100, 105);
 		singerTf.setSize(200, 30);
+		singerTf.setLocation(170, 235);
 		pa2.add(singerTf);
 		
 		//제목 입력받기
-		JLabel title = new JLabel("제목");
+		JLabel title = new JLabel("곡명");
 		title.setFont(new Font("고딕", Font.PLAIN, 15));
-		title.setSize(40,80);
-		title.setLocation(20,160);
+		title.setSize(250,100);
+		title.setLocation(100,150);
 		pa2.add(title);
 		
 		JTextField titleTf = new JTextField(45);
-		titleTf.setLocation(100, 185);
 		titleTf.setSize(200, 30);
+		titleTf.setLocation(170, 185);
 		pa2.add(titleTf);
 		
 		JButton insertBtn = new JButton("확인");

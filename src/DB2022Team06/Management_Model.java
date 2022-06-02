@@ -181,12 +181,15 @@ public class Management_Model {
          	conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             Statement stmt = conn.createStatement();
             PreparedStatement pStmt1 = conn.prepareStatement(query1);
+            
             PreparedStatement pStmt2 = conn.prepareStatement(query2);
             PreparedStatement pStmt3 = conn.prepareStatement(query3);
+            
             PreparedStatement pStmt4 = conn.prepareStatement(query4);
             PreparedStatement pStmt5 = conn.prepareStatement(query5);
         	
-        	//conn.setAutoCommit(false);
+            System.out.println(music_id);
+        	conn.setAutoCommit(false);
         	pStmt1.setTimestamp(1, new java.sql.Timestamp(playtime.getTime()));
         	pStmt1.setString(2, title);
         	pStmt1.setInt(3, likes);
@@ -198,11 +201,13 @@ public class Management_Model {
         	pStmt1.setInt(9, music_age);
         	pStmt1.setInt(10, music_id);
         	pStmt1.executeUpdate();
-        	
+        
         	pStmt2.setInt(1,music_id);
         	pStmt3.setInt(1, music_id);
+        	
         	pStmt4.setInt(1, music_id);
         	pStmt4.setString(2,songwriter);
+        	
         	pStmt5.setInt(1, music_id);
         	pStmt5.setString(2,singer);
         	
@@ -212,8 +217,8 @@ public class Management_Model {
         	pStmt5.executeUpdate();
         	
         	
-        	//conn.commit();
-        	//conn.setAutoCommit(true);
+        	conn.commit();
+        	conn.setAutoCommit(true);
         	
         	ResultSet rset;
         	rset = stmt.executeQuery("with TMP AS( \r\n"
