@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -40,6 +39,7 @@ class MyListener implements ActionListener{
         
         case 2: 
         	//나만의 플레이 리스트
+        	new Nickname(contentpane, mainframe, panel);
         	break;
         	
         case 3: 
