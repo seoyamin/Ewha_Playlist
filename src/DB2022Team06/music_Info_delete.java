@@ -3,6 +3,7 @@ import javax.swing.*;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -84,11 +85,12 @@ public class music_Info_delete extends JFrame {
 		setSize(450, 800);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		jPanel.setLayout(null);// 배치관리자 해제
+		Font font = new Font("돋움", Font.PLAIN, 20);
 		
-		JLabel labe=new JLabel("플레이리스트에서 삭제할 노래의 곡명과 가수명을 입력하세요");
-		jPanel.add(labe); labe.setVisible(true); labe.setLocation(60, 70); labe.setSize(400, 100);
+		JLabel labe=new JLabel("<html><body style='text-align:center'><body>플레이리스트에서 삭제할 노래의 <br/>곡명과 가수명을 입력하세요</body><html>");
+		jPanel.add(labe); labe.setVisible(true); labe.setLocation(60, 70); labe.setSize(400, 100); labe.setFont(font);
 		
-		JLabel music=new JLabel("곡명"); JLabel singer=new JLabel("가수명");
+		JLabel music=new JLabel("곡명"); music.setFont(font); JLabel singer=new JLabel("가수명"); singer.setFont(font);
 		jPanel.add(music); jPanel.add(singer);
 		
 		music.setLocation(100,150); music.setSize(250,100); 

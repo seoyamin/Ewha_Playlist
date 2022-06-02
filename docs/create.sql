@@ -212,7 +212,12 @@ create table db2022_playlist_user (
     foreign key(music_id) references db2022_music(music_id)
 ) default character set utf8 collate utf8_unicode_ci;
 
-create view db2022_all_song as
+create view db2022_all_song_adult as
     select title, singer
     from db2022_music natural join db2022_singer
     where db2022_music.music_id = db2022_singer.music_id;
+    
+create view db2022_all_song_minor as
+    select title, singer
+    from db2022_music natural join db2022_singer
+    where db2022_music.music_id = db2022_singer.music_id and db2022_music.age_limit=false;
