@@ -8,6 +8,7 @@ public class playlist_main extends JFrame {
 	
 	Color EWHA_GREEN = new Color(0,70,42);
     int BTNSIZE = 250;
+    Font font = new Font("돋움", Font.PLAIN, 20);
 	
 	private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String USERNAME = "DB2022Team06";//DBMS접속 시 아이디
@@ -87,8 +88,8 @@ public class playlist_main extends JFrame {
 		setSize(450,800); setVisible(true); setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		jPanel.setLayout(null);// 배치관리자 해제
 		
-		JLabel jLabel=new JLabel(nickname+"의 플레이리스트");
-		jPanel.add(jLabel); jLabel.setVisible(true); jLabel.setSize(250, 100); jLabel.setLocation(170,30);
+		JLabel jLabel=new JLabel(nickname+"의 플레이리스트"); jLabel.setFont(font);
+		jPanel.add(jLabel); jLabel.setVisible(true); jLabel.setSize(250, 100); jLabel.setLocation(140,30);
 		
 		/* 플레이리스트에 음악 추가 */
 		JButton btn1=new JButton("음악 추가");
@@ -139,7 +140,7 @@ public class playlist_main extends JFrame {
 		/*이전 화면으로 돌아가기*/
 		JButton btn5 = new JButton("이전");
 		jPanel.add(btn5,BorderLayout.CENTER);
-		btn5.setVisible(true); btn5.setSize(100, 50); btn5.setLocation(125, 540);
+		btn5.setVisible(true); btn5.setSize(100, 50); btn5.setLocation(160, 540);
 		btn5.setForeground(Color.WHITE); btn5.setBackground(Color.gray);
 		btn5.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

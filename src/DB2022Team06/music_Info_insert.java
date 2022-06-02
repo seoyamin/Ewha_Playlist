@@ -2,6 +2,7 @@ package DB2022Team06;
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -82,11 +83,12 @@ public class music_Info_insert extends JFrame {
 		setVisible(true); setTitle("플레이리스트에 음악 추가"); setSize(450, 800); 
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		jPanel.setLayout(null);// 배치관리자 해제
+		Font font = new Font("돋움", Font.PLAIN, 20);
 		
 		JLabel labe=new JLabel("플레이리스트에 추가할 노래의 곡명과 가수명을 입력하세요");
-		jPanel.add(labe); labe.setVisible(true); labe.setLocation(60, 70); labe.setSize(400, 100);
+		jPanel.add(labe); labe.setVisible(true); labe.setLocation(60, 70); labe.setSize(400, 100); labe.setFont(font);
 		
-		JLabel music=new JLabel("곡명"); JLabel singer=new JLabel("가수명");
+		JLabel music=new JLabel("곡명");music.setFont(font); JLabel singer=new JLabel("가수명"); singer.setFont(font);
 		jPanel.add(music); jPanel.add(singer);
 		
 		music.setLocation(100,150); music.setSize(250,100); 
