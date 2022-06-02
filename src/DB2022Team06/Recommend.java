@@ -15,6 +15,8 @@ import javax.swing.JTextField;
 public class Recommend{
 
 	Recommend(Container contentpane, MainFrame mainframe, JPanel panel){ // 생성자
+		Color EWHA_GREEN = new Color(0,70,42);
+		
 		Recommend_Model model = new Recommend_Model(); //sql 연결 함수를 사용하기 위한 객체 생성
 
 		mainframe.setTitle("음악정보관리시스템 이플리 DBMS");
@@ -57,7 +59,7 @@ public class Recommend{
 		inputBtn.setLocation(305, 200);
 		inputBtn.setSize(80, 40);
 		inputBtn.setForeground(Color.WHITE);
-		inputBtn.setBackground(Color.GRAY);
+		inputBtn.setBackground(EWHA_GREEN);
 		recommendPanel.add(inputBtn);
 		
 		inputBtn.addActionListener(new ActionListener() {

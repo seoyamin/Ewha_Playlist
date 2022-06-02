@@ -37,7 +37,7 @@ class Signin {
     	
     	try {
         	Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            System.out.println("connection success");
+           // System.out.println("connection success");
            
             try {
             	
@@ -56,6 +56,7 @@ class Signin {
             System.out.println("[회원가입 완료]"+nickname+"유저가 등록되었습니다 ");
             USERINFO.nickname=nickname; // 유저 정보 저장
             USERINFO.age=age;
+            USERINFO.name=name;
             USERINFO.favorite_genre=favorite_genre;
             
             //user_id 가져오기
@@ -79,7 +80,7 @@ class Signin {
             System.out.println("중복된 닉네임이 존재합니다. 다른 닉네임으로 회원가입을 시도해주세요. " + sqle);
             }
             	
-           
+            System.out.println("\n");
             conn.close();
             
         } catch (SQLException e1) {

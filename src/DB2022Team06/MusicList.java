@@ -25,7 +25,7 @@ class SelectMusicList {
 
     	try {
         	Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            System.out.println("success");
+           // System.out.println("success");
             
             Statement stmt = conn.createStatement(); 
             
@@ -50,8 +50,8 @@ class SelectMusicList {
             		 rset = stmt.executeQuery(
                      		"select * from db2022_music where genre=\""+genre+"\""
                      	);
-            		 System.out.println("장르가 "+genre+"인곡 목록\n");
-            		 System.out.println("id|타이틀|재생시간|장르|좋아요|발매일\n");
+            		 System.out.println("<장르가 "+genre+"인곡 목록>");
+            		 System.out.println("id|타이틀|재생시간|장르|좋아요|발매일");
             		 while (rset.next()) {
              			
                  		System.out.println(rset.getInt(1)+" | "+rset.getString("title")+" | "+rset.getTime("playtime")+" | "+rset.getString("genre")+" | "+rset.getInt("likes")+" | "+rset.getDate("release_date"));
@@ -59,7 +59,7 @@ class SelectMusicList {
             		 
             		 }
             	
-            		
+            	 System.out.println("\n");
             
             }
             catch (SQLException sqle)

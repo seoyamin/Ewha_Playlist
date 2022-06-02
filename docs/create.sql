@@ -199,6 +199,8 @@ create table db2022_user (
     primary key(user_id)
 ) default character set utf8 collate utf8_unicode_ci;
 
+create index index_music on db2022_user(user_id);
+
 # 마이 플레이리스트 테이블 생성 - user id, music id, 곡의 나이 제한 여부, 곡의 장르
 create table db2022_playlist_user (
     user_id int ,
@@ -210,12 +212,6 @@ create table db2022_playlist_user (
     foreign key(music_id) references db2022_music(music_id)
 ) default character set utf8 collate utf8_unicode_ci;
 
-# 곡 정보 view 생성 - music id, 제목, 가수, 작사작곡가, 재생시간, 좋아요 수, 장르, 발매일, 나이 제한 여부
-create view db2022_song_info as
-    select music_id, title, singer, songwriter, playtime, likes, genre, release_date, age_limit
-    from db2022_music natural join db2022_singer natural join db2022_songwriter 
-    where db2022_music.music_id = db2022_singer.music_id and db2022_music.music_id = db2022_songwriter.music_id;
-    
 create view db2022_all_song as
     select title, singer
     from db2022_music natural join db2022_singer
