@@ -81,7 +81,7 @@ public class music_Info_delete extends JFrame {
 		add(jPanel);
 		setVisible(true);
 		setTitle("곡명, 가수명 검색");
-		setSize(500, 500);
+		setSize(450, 800);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		jPanel.setLayout(null);// 배치관리자 해제
 		

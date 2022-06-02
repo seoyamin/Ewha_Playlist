@@ -23,18 +23,19 @@ public class Management2{
 	JPanel pa1, pa2;
 	Management_Model model = new Management_Model();
 	JButton goPrevBtn = new JButton("뒤로");
-	
+	int btnNum;
+	static int music_id;
 	
 	public Management2(Container contentpane, MainFrame mainframe, JPanel prevPanel, int btnNum) {
 		
-		
+		this.btnNum = btnNum;
 		goPrevBtn.setLocation(10,10);
 		goPrevBtn.setSize(80,40);     
 		goPrevBtn.setForeground(Color.WHITE); //글씨 색상
 		goPrevBtn.setBackground(Color.GRAY);
 		
 	
-		if(btnNum == 0) {
+		if(btnNum == 0 || btnNum == 3) {
 			pa1 = new JPanel();
 			pa1.setLayout(null);
 			
@@ -46,8 +47,10 @@ public class Management2{
 			});
 			pa1.add(goPrevBtn);
 			
+			JLabel La;
 			//가수, 제목, playtime, likes, genre, age_limit, release_date, situation, season, music_age
-			JLabel La = new JLabel("추가하고 싶은 노래의 정보를 입력하세요.", JLabel.CENTER);
+			if(btnNum == 0) La = new JLabel("추가하고 싶은 노래의 정보를 입력하세요.", JLabel.CENTER);
+			else La = new JLabel("수정된 노래의 정보를 입력하세요.", JLabel.CENTER);
 			La.setFont(new Font("고딕", Font.BOLD, 17));
 			La.setSize(450,15);
 			La.setLocation(0, 60);
@@ -169,7 +172,7 @@ public class Management2{
 			
 			//season 입력 
 			String [] seasons = {"봄","여름","가을","겨울"};
-			JLabel season = new JLabel("상황");
+			JLabel season = new JLabel("계절");
 			season.setFont(new Font("고딕", Font.PLAIN, 15));
 			season.setSize(40,80);
 			season.setLocation(20, 440);
@@ -209,7 +212,6 @@ public class Management2{
 					int maInfo;
 					int likesInfo;
 					
-					/*오류 잡기용*/
 					SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
 					String pt = playtimeTf.getText();
 					Date playtimeInfo;
@@ -237,8 +239,10 @@ public class Management2{
 						
 						playtimeInfo = formatter.parse(pt);
 						rdInfo = formatter2.parse(rd);
-						
-						model.insert(playtimeInfo, titleInfo, likesInfo, genreInfo, limitInfo, rdInfo, situInfo, seasonInfo, maInfo, writerInfo, singerInfo);
+						if(btnNum == 1) {model.insert(playtimeInfo, titleInfo, likesInfo, genreInfo, limitInfo, rdInfo, situInfo, seasonInfo, maInfo, writerInfo, singerInfo);}
+						else if(btnNum == 3) { //수정페이지
+							model.modify(music_id, playtimeInfo, titleInfo, likesInfo, genreInfo, limitInfo, rdInfo, situInfo, seasonInfo, maInfo, writerInfo, singerInfo);
+						}
 						
 					}catch (ParseException e1) { //date 관련
 						// TODO Auto-generated catch block
@@ -254,10 +258,11 @@ public class Management2{
 		}
 		
 		else {
-			this.insertInfo(contentpane, prevPanel, btnNum);
+			this.insertInfo(contentpane, mainframe, prevPanel, btnNum);
 		}
 	}
-	public void insertInfo(Container contentpane, JPanel prevPanel, int btnNum) {
+	
+	public void insertInfo(Container contentpane, MainFrame mainframe, JPanel prevPanel, int btnNum) {
 		pa2 = new JPanel();
 		pa2.setLayout(null);
 		
@@ -311,14 +316,21 @@ public class Management2{
 			public void actionPerformed(ActionEvent e) {
 				String singerInfo = singerTf.getText();
 				String titleInfo = titleTf.getText();
-				if(btnNum == 1) model.modify(singerInfo, titleInfo); else model.delete(singerInfo, titleInfo);
+				if(btnNum == 2) {
+					model.delete(singerInfo, titleInfo);
+				} 
+				else if(btnNum == 1) {
+					music_id = Management_Model.findMusic(singerInfo, titleInfo);
+					if (music_id == 0){
+						JOptionPane.showMessageDialog(null,"해당하는 곡이 없습니다.","Message", JOptionPane.ERROR_MESSAGE);
+					}
+					else {pa2.setVisible(false); new Management2(contentpane, mainframe, prevPanel, 3);}
+				}
 			}
 		});
 		
 		
 		pa2.add(insertBtn);
-		
-		
 		pa2.add(goPrevBtn);
 		
 		contentpane.add(pa2);
