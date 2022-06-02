@@ -80,7 +80,7 @@ class Signin {
             System.out.println("중복된 닉네임이 존재합니다. 다른 닉네임으로 회원가입을 시도해주세요. " + sqle);
             }
             	
-           
+            System.out.println("\n");
             conn.close();
             
         } catch (SQLException e1) {

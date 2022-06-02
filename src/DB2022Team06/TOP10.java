@@ -47,7 +47,8 @@ public class TOP10 {
             {
             System.out.println("Could not select tuple. " + sqle);
             }
-            	
+            
+            System.out.println("\n");
             stmt.close();
             conn.close();
         } catch (SQLException e1) {

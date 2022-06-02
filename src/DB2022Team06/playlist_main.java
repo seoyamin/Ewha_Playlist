@@ -8,6 +8,7 @@ public class playlist_main extends JFrame {
 	
 	Color EWHA_GREEN = new Color(0,70,42);
     int BTNSIZE = 250;
+    Font font = new Font("돋움", Font.PLAIN, 20);
 	
 	private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String USERNAME = "DB2022Team06";//DBMS접속 시 아이디
@@ -43,25 +44,40 @@ public class playlist_main extends JFrame {
     }
     
     /* 전체 음악 목록 sql*/
-    public void Total_musicPlaylist() {
+    public void Total_musicPlaylist(String nickname) {
     	try {
     		int i=1;
 				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-				Statement stmt = conn.createStatement(); 
 	            //stmt.executeQuery("use DB2022Team06");
-	            ResultSet rs = stmt.executeQuery("select * from db2022_all_song");
+				Statement stmt = conn.createStatement(); 
+				ResultSet rs = stmt.executeQuery("select age from db2022_user where nickname="+"'"+nickname+"'");
+	            Statement stmt1 = conn.createStatement(); 
+	            ResultSet rs1 = stmt1.executeQuery("select * from db2022_all_song_adult");
+	            Statement stmt2 = conn.createStatement(); 
+	            ResultSet rs2 = stmt2.executeQuery("select * from db2022_all_song_minor");
+	            
+	            int user_age=0;
 	            System.out.println("_____________________________");
-            	System.out.println("전체 음악 목록 조회");
-            	System.out.println("_____________________________");
+				System.out.println("전체 음악 목록 조회");
+				System.out.println("_____________________________");
+	            
 	            while(rs.next()) {
-	            	System.out.printf("%d. %-20s| %-20s\n", i, rs.getString(1), rs.getString(2));
-	            	i++;
-	            }
-    		} 
+	            	user_age=rs.getInt(1);
+	            	if(user_age<=19) { //미성년자용 전체음악목록 조회
+	            		while(rs2.next()) {
+	            			System.out.printf("%d. %-20s| %-20s\n", i, rs2.getString(1), rs2.getString(2));
+	            			i++; }
+	            		}
+	            	else{
+	            		while(rs1.next()) {
+            				System.out.printf("%d. %-20s| %-20s\n", i, rs1.getString(1), rs1.getString(2));
+            				i++; }
+	            		}
+	            	}
+	            } 
     		catch (SQLException e) {
-				e.printStackTrace();
-			}
-    }
+				e.printStackTrace(); }
+    	}
 
 	public playlist_main(String nickname) {
 		
@@ -72,8 +88,8 @@ public class playlist_main extends JFrame {
 		setSize(450,800); setVisible(true); setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		jPanel.setLayout(null);// 배치관리자 해제
 		
-		JLabel jLabel=new JLabel(nickname+"의 플레이리스트");
-		jPanel.add(jLabel); jLabel.setVisible(true); jLabel.setSize(250, 100); jLabel.setLocation(170,30);
+		JLabel jLabel=new JLabel(nickname+"의 플레이리스트"); jLabel.setFont(font);
+		jPanel.add(jLabel); jLabel.setVisible(true); jLabel.setSize(250, 100); jLabel.setLocation(140,30);
 		
 		/* 플레이리스트에 음악 추가 */
 		JButton btn1=new JButton("음악 추가");
@@ -117,14 +133,14 @@ public class playlist_main extends JFrame {
 		btn4.setForeground(Color.WHITE); btn4.setBackground(EWHA_GREEN);
 		btn4.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Total_musicPlaylist();
+				Total_musicPlaylist(nickname);
 			}
 		});
 		
 		/*이전 화면으로 돌아가기*/
 		JButton btn5 = new JButton("이전");
 		jPanel.add(btn5,BorderLayout.CENTER);
-		btn5.setVisible(true); btn5.setSize(100, 50); btn5.setLocation(125, 540);
+		btn5.setVisible(true); btn5.setSize(100, 50); btn5.setLocation(160, 540);
 		btn5.setForeground(Color.WHITE); btn5.setBackground(Color.gray);
 		btn5.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
