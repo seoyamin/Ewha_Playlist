@@ -199,6 +199,8 @@ create table db2022_user (
     primary key(user_id)
 ) default character set utf8 collate utf8_unicode_ci;
 
+create index index_music on db2022_user(user_id);
+
 # 마이 플레이리스트 테이블 생성 - user id, music id, 곡의 나이 제한 여부, 곡의 장르
 create table db2022_playlist_user (
     user_id int ,
