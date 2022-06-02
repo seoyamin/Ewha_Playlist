@@ -43,25 +43,40 @@ public class playlist_main extends JFrame {
     }
     
     /* 전체 음악 목록 sql*/
-    public void Total_musicPlaylist() {
+    public void Total_musicPlaylist(String nickname) {
     	try {
     		int i=1;
 				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-				Statement stmt = conn.createStatement(); 
 	            //stmt.executeQuery("use DB2022Team06");
-	            ResultSet rs = stmt.executeQuery("select * from db2022_all_song");
+				Statement stmt = conn.createStatement(); 
+				ResultSet rs = stmt.executeQuery("select age from db2022_user where nickname="+"'"+nickname+"'");
+	            Statement stmt1 = conn.createStatement(); 
+	            ResultSet rs1 = stmt1.executeQuery("select * from db2022_all_song_adult");
+	            Statement stmt2 = conn.createStatement(); 
+	            ResultSet rs2 = stmt2.executeQuery("select * from db2022_all_song_minor");
+	            
+	            int user_age=0;
 	            System.out.println("_____________________________");
-            	System.out.println("전체 음악 목록 조회");
-            	System.out.println("_____________________________");
+				System.out.println("전체 음악 목록 조회");
+				System.out.println("_____________________________");
+	            
 	            while(rs.next()) {
-	            	System.out.printf("%d. %-20s| %-20s\n", i, rs.getString(1), rs.getString(2));
-	            	i++;
-	            }
-    		} 
+	            	user_age=rs.getInt(1);
+	            	if(user_age<=19) { //미성년자용 전체음악목록 조회
+	            		while(rs2.next()) {
+	            			System.out.printf("%d. %-20s| %-20s\n", i, rs2.getString(1), rs2.getString(2));
+	            			i++; }
+	            		}
+	            	else{
+	            		while(rs1.next()) {
+            				System.out.printf("%d. %-20s| %-20s\n", i, rs1.getString(1), rs1.getString(2));
+            				i++; }
+	            		}
+	            	}
+	            } 
     		catch (SQLException e) {
-				e.printStackTrace();
-			}
-    }
+				e.printStackTrace(); }
+    	}
 
 	public playlist_main(String nickname) {
 		
@@ -117,7 +132,7 @@ public class playlist_main extends JFrame {
 		btn4.setForeground(Color.WHITE); btn4.setBackground(EWHA_GREEN);
 		btn4.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Total_musicPlaylist();
+				Total_musicPlaylist(nickname);
 			}
 		});
 		
