@@ -37,7 +37,7 @@ public class Recommend_Model {
         		System.out.println("---------------------------------------------------------------------------------------------");
         		do{
         			if(rs1.getBoolean("age_limit") && rs1.getInt("age") < 20) { //유저가 20살 미만이고 곡의 나이 제한이 true면 이 튜플 건너뛰기
-        				return;
+        				continue;
         			}else {
         				// 해당 튜플(곡)의 제목 정보 출력
         				System.out.print(rs1.getString("title") + " | ");
