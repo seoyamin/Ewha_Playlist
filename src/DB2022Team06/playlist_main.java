@@ -6,6 +6,9 @@ import java.sql.*;
 
 public class playlist_main extends JFrame {
 	
+	Color EWHA_GREEN = new Color(0,70,42);
+    int BTNSIZE = 250;
+	
 	private static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String USERNAME = "DB2022Team06";//DBMS접속 시 아이디
     private static final String PASSWORD = "DB2022Team06";//DBMS접속 시 비밀번호
@@ -66,19 +69,17 @@ public class playlist_main extends JFrame {
 		
 		JPanel jPanel=new JPanel();
 		add(jPanel);
-		setSize(500,500);
-		setVisible(true);
-		setLayout(null);// 배치관리자 해제
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		setSize(450,800); setVisible(true); setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		jPanel.setLayout(null);// 배치관리자 해제
 		
 		JLabel jLabel=new JLabel(nickname+"의 플레이리스트");
-		jPanel.add(jLabel,BorderLayout.CENTER);
-		jLabel.setVisible(true);
+		jPanel.add(jLabel); jLabel.setVisible(true); jLabel.setSize(250, 100); jLabel.setLocation(170,30);
 		
 		/* 플레이리스트에 음악 추가 */
 		JButton btn1=new JButton("음악 추가");
-		jPanel.add(btn1,BorderLayout.CENTER);
-		btn1.setVisible(true);
+		jPanel.add(btn1);
+		btn1.setVisible(true); btn1.setSize(BTNSIZE, 50); btn1.setLocation(85, 130);
+		btn1.setForeground(Color.WHITE); btn1.setBackground(EWHA_GREEN);
 		btn1.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new music_Info_insert(nickname);
@@ -89,7 +90,8 @@ public class playlist_main extends JFrame {
 		/* 플레이리스트에 음악 삭제 */
 		JButton btn2=new JButton("음악 삭제");
 		jPanel.add(btn2,BorderLayout.CENTER);
-		btn2.setVisible(true);
+		btn2.setVisible(true);  btn2.setSize(BTNSIZE, 50); btn2.setLocation(85,230);
+		btn2.setForeground(Color.WHITE); btn2.setBackground(EWHA_GREEN);
 		btn2.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new music_Info_delete(nickname);
@@ -100,8 +102,8 @@ public class playlist_main extends JFrame {
 		/* 나만의 플레이리스트 음악 조회 */
 		JButton btn3=new JButton("나의 음악 목록 조회");
 		jPanel.add(btn3,BorderLayout.CENTER);
-		btn3.setVisible(true);
-		
+		btn3.setVisible(true); btn3.setSize(BTNSIZE, 50); btn3.setLocation(85, 330);
+		btn3.setForeground(Color.WHITE); btn3.setBackground(EWHA_GREEN);
 		btn3.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				user_musicPlaylist(nickname);
@@ -111,8 +113,8 @@ public class playlist_main extends JFrame {
 		/* 전체 플레이리스트 음악 조회 */
 		JButton btn4=new JButton("전체 음악 목록 조회");
 		jPanel.add(btn4,BorderLayout.CENTER);
-		btn4.setVisible(true);
-		
+		btn4.setVisible(true); btn4.setSize(BTNSIZE, 50); btn4.setLocation(85, 440);
+		btn4.setForeground(Color.WHITE); btn4.setBackground(EWHA_GREEN);
 		btn4.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Total_musicPlaylist();
@@ -122,8 +124,8 @@ public class playlist_main extends JFrame {
 		/*이전 화면으로 돌아가기*/
 		JButton btn5 = new JButton("이전");
 		jPanel.add(btn5,BorderLayout.CENTER);
-		btn5.setVisible(true);
-		
+		btn5.setVisible(true); btn5.setSize(100, 50); btn5.setLocation(125, 540);
+		btn5.setForeground(Color.WHITE); btn5.setBackground(Color.gray);
 		btn5.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new MainFrame();

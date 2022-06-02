@@ -11,18 +11,8 @@ public class Nickname {
     private static final String PASSWORD = "DB2022Team06";//DBMS접속 시 비밀번호
     private static final String URL = "jdbc:mysql://localhost:3306/DB2022Team06";
     
-   /* public void user_Info() {
-    	try {
-				Connection conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-				Statement stmt = conn.createStatement(); 
-	            //stmt.executeQuery("use DB2022Team06");
-	            ResultSet rs = stmt.executeQuery("select nickname, age from db2022_user");
-	            String nickname=rs.getString(1);
-    	}
-    		catch (SQLException e) {
-				e.printStackTrace();
-			}
-    } */
+    Color EWHA_GREEN = new Color(0,70,42);
+    int BTNSIZE = 250;
 
 	Nickname(Container contentpane, MainFrame mainframe, JPanel panel) {
 		
@@ -31,7 +21,6 @@ public class Nickname {
 		/* Panel 추가 */
 		JPanel jPanel=new JPanel(); 
 		mainframe.add(jPanel);
-		mainframe.setSize(500,500);
 		mainframe.setVisible(true);
 		mainframe.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		jPanel.setLayout(null);// 배치관리자 해제
@@ -40,19 +29,23 @@ public class Nickname {
 		JLabel text=new JLabel("닉네임을 입력하세요");
 		jPanel.add(text);
 		text.setVisible(true);
-		text.setLocation(100, 100);
-		text.setSize(250,100);
+		text.setLocation(170, 60);
+		text.setSize(250,180);
 		
 		/*닉네임 입력 box*/
 		JTextField name=new JTextField();
 		jPanel.add(name);
 		name.setVisible(true);
-		name.setBounds(130, 100, 200, 30);
+		name.setBounds(130, 180, 190, 40);
+		
 		
 		JButton btn1=new JButton("입력");
 		jPanel.add(btn1);
 		btn1.setVisible(true);
-		btn1.setBounds(230, 200,200, 40);
+		btn1.setSize(BTNSIZE,50);
+		btn1.setForeground(Color.WHITE); //글씨 색상
+		btn1.setBackground(EWHA_GREEN);
+		btn1.setLocation(100, 290);
 		
 		btn1.addActionListener(new ActionListener() {
 			
@@ -76,16 +69,20 @@ public class Nickname {
 		    				new playlist_main(nickname); //플레이리스트 창으로 이동
 		    				mainframe.setVisible(false);
 		    			}
+		            	
 		            	else { //회원 정보가 없다면 
 		            		JLabel popup=new JLabel("회원 정보가 없습니다. 회원가입 후 다시 이용해주세요");
 		            		jPanel.add(popup);
 		            		popup.setVisible(true);
-		            		popup.setBounds(100, 100, 450, 100);
+		            		popup.setBounds(100, 210, 500, 100);
 		            		
-		            		JButton btn2=new JButton("회원가입"); 
+		            		JButton btn2=new JButton("메인"); 
 		            		jPanel.add(btn2);
 		            		btn2.setVisible(true);
-		            		btn2.setBounds(100,200,150,70);
+		            		btn2.setForeground(Color.WHITE); //글씨 색상
+		            		btn2.setBackground(EWHA_GREEN);
+		            		btn2.setSize(BTNSIZE,50);
+		            		btn2.setLocation(100, 360);
 		            		
 		            		btn2.addActionListener((ActionListener) new ActionListener() {
 		    					public void actionPerformed(ActionEvent e) {
