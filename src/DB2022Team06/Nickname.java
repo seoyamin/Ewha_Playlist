@@ -48,6 +48,22 @@ public class Nickname {
 		btn1.setBackground(EWHA_GREEN);
 		btn1.setLocation(100, 260);
 		
+		/*메인메뉴 버튼*/
+		JButton btn2=new JButton("메인"); 
+		jPanel.add(btn2);
+		btn2.setLocation(10,10);
+		btn2.setSize(80, 40);
+		btn2.setForeground(Color.WHITE); //글씨 색상
+		btn2.setBackground(Color.GRAY);
+		
+		btn2.addActionListener((ActionListener) new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new MainFrame(); //메인 창으로 변경
+				mainframe.setVisible(false);
+			}
+		});
+		
+		
 		btn1.addActionListener(new ActionListener() {
 			
 			String user_nickname;

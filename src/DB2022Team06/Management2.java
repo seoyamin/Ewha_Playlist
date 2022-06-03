@@ -26,6 +26,9 @@ public class Management2{
 	int btnNum;
 	static int music_num;
 	
+	/*새로운 곡을 정보를 입력하거나 수정할 곡의 정보를 입력하는 창 
+	 * btnNum이 0이거나 3 이면 새로운 곡 혹은 수정할 곡의 정보를 입력하는 창이다
+	 * */
 	public Management2(Container contentpane, MainFrame mainframe, JPanel prevPanel, int btnNum) {
 		
 		this.btnNum = btnNum;
@@ -196,10 +199,12 @@ public class Management2{
 			maCb.setSize(200, 30);
 			pa1.add(maCb);
 			
+			//곡 정보 확정 창
 			JButton insertBtn = new JButton("확인");
 			insertBtn.setLocation(300,650);
 			insertBtn.setSize(80,40);
 			
+			//위에 버튼의 액션
 			insertBtn.addActionListener((ActionListener) new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String singerInfo;
@@ -239,8 +244,9 @@ public class Management2{
 						
 						playtimeInfo = formatter.parse(pt);
 						rdInfo = formatter2.parse(rd);
+						//btnNum 이 0이면 새로운 곡을 입력받는 것이므로 insert 사용
 						if(btnNum == 0) {model.insert(playtimeInfo, titleInfo, likesInfo, genreInfo, limitInfo, rdInfo, situInfo, seasonInfo, maInfo, writerInfo, singerInfo);}
-						else if(btnNum == 3) { //수정페이지
+						else if(btnNum == 3) { //btnNum 이 3이면 곡을 수정하는 것이므로 modify 사용
 							model.modify(music_num, playtimeInfo, titleInfo, likesInfo, genreInfo, limitInfo, rdInfo, situInfo, seasonInfo, maInfo, writerInfo, singerInfo);
 						}
 						
@@ -257,7 +263,7 @@ public class Management2{
 			contentpane.add(pa1);
 		}
 		
-		else {
+		else { // 두번째 버튼과 세번째 버튼을 눌렀을때 뜨는 창으로 곡의 제목과 가수를 입력받아 music_id를 알아온다.
 			this.insertInfo(contentpane, mainframe, prevPanel, btnNum);
 		}
 	}
@@ -309,6 +315,7 @@ public class Management2{
 		titleTf.setLocation(170, 185);
 		pa2.add(titleTf);
 		
+		//입력받은 정보를 전달해주는 버튼
 		JButton insertBtn = new JButton("확인");
 		insertBtn.setLocation(300,650);
 		insertBtn.setSize(80,40);
@@ -316,10 +323,10 @@ public class Management2{
 			public void actionPerformed(ActionEvent e) {
 				String singerInfo = singerTf.getText();
 				String titleInfo = titleTf.getText();
-				if(btnNum == 2) {
+				if(btnNum == 2) { //btnNum == 2 이면 곡 삭제하기 버튼을 누른 것이므로
 					model.delete(singerInfo, titleInfo);
 				} 
-				else if(btnNum == 1) {
+				else if(btnNum == 1) { //btnNum == 1 이면 곡 수정하기 버튼을 누른 것이므로 다시 곡 정보를 새로 입력받는 창으로 이동한다. 
 					music_num = Management_Model.findMusic(singerInfo, titleInfo);
 					if (music_num == 0){
 						JOptionPane.showMessageDialog(null,"해당하는 곡이 없습니다.","Message", JOptionPane.ERROR_MESSAGE);
