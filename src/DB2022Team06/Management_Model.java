@@ -63,7 +63,6 @@ public class Management_Model {
         	if (rs.next()) {
         		autoIncrement = rs.getInt(1);
         	}
-        	System.out.println(autoIncrement);
         	
         	pStmt2.setInt(1, autoIncrement);
         	pStmt2.setString(2, songwriter);
@@ -76,21 +75,11 @@ public class Management_Model {
         	conn.commit();
         	conn.setAutoCommit(true);
         	
-        	//변경내용 확인용 
-        	ResultSet rset;
-        	rset = stmt.executeQuery("with TMP AS( \r\n"
-            		+ "select music_id,title,playtime,likes,genre,age_limit,release_date, GROUP_CONCAT(songwriter SEPARATOR ',') as songwriter \r\n"
-            		+ "from db2022_music natural join db2022_songwriter group by music_id) \r\n"
-            		+ "SELECT music_id,title,playtime,songwriter,likes,genre,age_limit,release_date,GROUP_CONCAT(singer SEPARATOR ',')\r\n"
-            		+ "from TMP natural join db2022_singer group by music_id ");
-        	
-        	System.out.println("<변경된 점을 확인하세요>\n");
-
- 			while (rset.next()) {
-
- 				System.out.println(rset.getString("music_id")+" | "+rset.getString("title")+" | "+rset.getTime("playtime")+" | "+rset.getString("GROUP_CONCAT(singer SEPARATOR ',')")+" | "+rset.getString("songwriter")+" | "+rset.getInt("likes")+" | "+rset.getString("genre")+" | "+rset.getDate("release_date"));
-     		
- 			}
+        	System.out.println("---------------------------------------------------------------\n");
+			System.out.println("title: " + title);
+			System.out.println("singer: " + singer);
+			System.out.println("\nSuccessfully Add\n");
+			System.out.println("---------------------------------------------------------------\n");
         }
         catch (SQLException sqle) {
         	if(conn!=null)
@@ -138,20 +127,9 @@ public class Management_Model {
          	conn.commit();
          	conn.setAutoCommit(true);
          	
-        	ResultSet rset;
-        	rset = stmt.executeQuery("with TMP AS( \r\n"
-            		+ "select music_id,title,playtime,likes,genre,age_limit,release_date, GROUP_CONCAT(songwriter SEPARATOR ',') as songwriter \r\n"
-            		+ "from db2022_music natural join db2022_songwriter group by music_id) \r\n"
-            		+ "SELECT music_id,title,playtime,songwriter,likes,genre,age_limit,release_date,GROUP_CONCAT(singer SEPARATOR ',')\r\n"
-            		+ "from TMP natural join db2022_singer group by music_id ");
-        	
-        	System.out.println("<변경된 점을 확인하세요>\n");
-
- 			while (rset.next()) {
-
- 				System.out.println(rset.getString("music_id")+" | "+rset.getString("title")+" | "+rset.getTime("playtime")+" | "+rset.getString("GROUP_CONCAT(singer SEPARATOR ',')")+" | "+rset.getString("songwriter")+" | "+rset.getInt("likes")+" | "+rset.getString("genre")+" | "+rset.getDate("release_date"));
-     		
- 			}
+         	System.out.println("---------------------------------------------------------------\n");
+			System.out.println("Successfully DELETE\n");
+			System.out.println("---------------------------------------------------------------\n");
          	
     	 
     	 }	
@@ -188,7 +166,6 @@ public class Management_Model {
             PreparedStatement pStmt4 = conn.prepareStatement(query4);
             PreparedStatement pStmt5 = conn.prepareStatement(query5);
         	
-            System.out.println(music_id);
         	conn.setAutoCommit(false);
         	pStmt1.setTimestamp(1, new java.sql.Timestamp(playtime.getTime()));
         	pStmt1.setString(2, title);
@@ -220,20 +197,9 @@ public class Management_Model {
         	conn.commit();
         	conn.setAutoCommit(true);
         	
-        	ResultSet rset;
-        	rset = stmt.executeQuery("with TMP AS( \r\n"
-            		+ "select music_id,title,playtime,likes,genre,age_limit,release_date, GROUP_CONCAT(songwriter SEPARATOR ',') as songwriter \r\n"
-            		+ "from db2022_music natural join db2022_songwriter group by music_id) \r\n"
-            		+ "SELECT music_id,title,playtime,songwriter,likes,genre,age_limit,release_date,GROUP_CONCAT(singer SEPARATOR ',')\r\n"
-            		+ "from TMP natural join db2022_singer group by music_id ");
-        	
-        	System.out.println("<변경된 점을 확인하세요>\n");
-
- 			while (rset.next()) {
-
- 				System.out.println(rset.getString("music_id")+" | "+rset.getString("title")+" | "+rset.getTime("playtime")+" | "+rset.getString("GROUP_CONCAT(singer SEPARATOR ',')")+" | "+rset.getString("songwriter")+" | "+rset.getInt("likes")+" | "+rset.getString("genre")+" | "+rset.getDate("release_date"));
-     		
- 			}
+        	System.out.println("---------------------------------------------------------------\n");
+			System.out.println("Successfully UPDATE\n");
+			System.out.println("---------------------------------------------------------------\n");
          	
     	 }
     	 catch (SQLException e1) {
