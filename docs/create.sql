@@ -205,19 +205,14 @@ create index index_music on db2022_user(user_id);
 create table db2022_playlist_user (
     user_id int ,
     music_id int,
-    genre varchar(45),
-    age_limit boolean,
     primary key(user_id, music_id),
     foreign key(user_id) references db2022_user(user_id),
     foreign key(music_id) references db2022_music(music_id)
 ) default character set utf8 collate utf8_unicode_ci;
 
 create view db2022_all_song_adult as
-    select title, singer
-    from db2022_music natural join db2022_singer
-    where db2022_music.music_id = db2022_singer.music_id;
+    select title,age_limit, GROUP_CONCAT(singer SEPARATOR ',') as singer
+    from db2022_music natural join db2022_singer group by music_id;
     
 create view db2022_all_song_minor as
-    select title, singer
-    from db2022_music natural join db2022_singer
-    where db2022_music.music_id = db2022_singer.music_id and db2022_music.age_limit=false;
+   select title,singer from db2022_all_song_adult where age_limit=false;
