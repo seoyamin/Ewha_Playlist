@@ -205,7 +205,6 @@ create index index_music on db2022_user(user_id);
 create table db2022_playlist_user (
     user_id int ,
     music_id int,
-    age_limit boolean,
     primary key(user_id, music_id),
     foreign key(user_id) references db2022_user(user_id),
     foreign key(music_id) references db2022_music(music_id)
