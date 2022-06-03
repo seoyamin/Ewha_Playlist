@@ -185,7 +185,7 @@ public class Management_Model {
         	pStmt1.setTimestamp(1, new java.sql.Timestamp(playtime.getTime()));
         	pStmt1.setString(2, title);
         	pStmt1.setInt(3, likes);
-        	pStmt1.setString(4, genrㄴe);
+        	pStmt1.setString(4, genre);
         	pStmt1.setBoolean(5, age_limit);
         	pStmt1.setDate(6, new java.sql.Date(release_date.getTime()));
         	pStmt1.setString(7, situation);
