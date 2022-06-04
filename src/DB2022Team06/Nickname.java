@@ -93,7 +93,7 @@ public class Nickname {
 		            		popup.setVisible(true);
 		            		popup.setBounds(100, 330, 500, 100);
 		            		
-		            		JButton btn2=new JButton("메인"); 
+		            		JButton btn2=new JButton("회원가입"); 
 		            		jPanel.add(btn2);
 		            		btn2.setVisible(true);
 		            		btn2.setForeground(Color.WHITE); //글씨 색상
@@ -103,8 +103,8 @@ public class Nickname {
 		            		
 		            		btn2.addActionListener((ActionListener) new ActionListener() {
 		    					public void actionPerformed(ActionEvent e) {
-		    						new MainFrame(); //회원가입 창으로 변경하기
-		    						mainframe.setVisible(false);
+		    						new SigninPage(contentpane, mainframe, panel); //회원가입 창으로 이동
+		    						jPanel.setVisible(false);
 		    					}
 		    				});
 		            	}
