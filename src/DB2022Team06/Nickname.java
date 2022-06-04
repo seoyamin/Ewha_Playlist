@@ -58,8 +58,8 @@ public class Nickname {
 		
 		btn2.addActionListener((ActionListener) new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new MainFrame(); //메인 창으로 변경
-				mainframe.setVisible(false);
+				jPanel.setVisible(false);
+				panel.setVisible(true); //메인 창으로 변경
 			}
 		});
 		
